@@ -1,0 +1,1366 @@
+// converted by version 1.3
+// on Sun Dec 08 21:23:42 ICT 2024
+
+.package com/example {
+	.aid 0x11:0x22:0x33:0x44:0x55:0x0;
+	.version 1.0;
+
+	.imports {
+		0xA0:0x0:0x0:0x0:0x62:0x1:0x1 1.3;		//javacard/framework
+		0xA0:0x0:0x0:0x0:0x62:0x2:0x9 1.0;		//javacardx/apdu
+		0xA0:0x0:0x0:0x0:0x62:0x0:0x1 1.0;		//java/lang
+	}
+
+	.applet {
+		0x11:0x22:0x33:0x44:0x55:0x0:0x0 BenhNhan;
+	}
+
+	.constantPool {
+		// 0
+		instanceFieldRef Patient BenhNhan/patient;
+		// 1
+		instanceFieldRef byte[] BenhNhan/tempBuffer;
+		// 2
+		instanceFieldRef byte[] Patient/hoten;
+		// 3
+		instanceFieldRef byte[] Patient/gioitinh;
+		// 4
+		instanceFieldRef byte[] Patient/ngaysinh;
+		// 5
+		instanceFieldRef byte[] Patient/quequan;
+		// 6
+		instanceFieldRef byte[] Patient/mabenhnhan;
+		// 7
+		instanceFieldRef byte[] Patient/pin;
+		// 8
+		instanceFieldRef byte[] Patient/tieusu;
+		// 9
+		instanceFieldRef byte[] Patient/diung;
+		// 10
+		instanceFieldRef short Patient/len_hoten;
+		// 11
+		instanceFieldRef short Patient/len_ns;
+		// 12
+		instanceFieldRef short Patient/len_gt;
+		// 13
+		instanceFieldRef short Patient/len_qq;
+		// 14
+		instanceFieldRef short Patient/len_mbn;
+		// 15
+		instanceFieldRef short Patient/len_pin;
+		// 16
+		instanceFieldRef short Patient/len_ts;
+		// 17
+		instanceFieldRef short Patient/len_du;
+		// 18
+		staticMethodRef BenhNhan/get_chatdu(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 19
+		staticMethodRef BenhNhan/set_tsba(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 20
+		staticMethodRef BenhNhan/set_chatdu(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 21
+		staticMethodRef BenhNhan/clear_card(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 22
+		staticMethodRef BenhNhan/processCard(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 23
+		staticMethodRef BenhNhan/unblockcard(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 24
+		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		// 25
+		virtualMethodRef 0.10.7()S;		// setOutgoing()S
+		// 26
+		staticFieldRef boolean BenhNhan/block_card;
+		// 27
+		virtualMethodRef Patient/getPin()[B;
+		// 28
+		staticMethodRef 0.16.0([BS[BSS)B;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+		// 29
+		virtualMethodRef 0.10.9(S)V;		// setOutgoingLength(S)V
+		// 30
+		staticFieldRef byte[] BenhNhan/abc;
+		// 31
+		virtualMethodRef 0.10.5([BSS)V;		// sendBytesLong([BSS)V
+		// 32
+		virtualMethodRef Patient/setLenDu(S)V;
+		// 33
+		virtualMethodRef Patient/setLenGt(S)V;
+		// 34
+		virtualMethodRef Patient/setLenHoten(S)V;
+		// 35
+		virtualMethodRef Patient/setLenMbn(S)V;
+		// 36
+		virtualMethodRef Patient/setLenNs(S)V;
+		// 37
+		virtualMethodRef Patient/setLenPin(S)V;
+		// 38
+		virtualMethodRef Patient/setLenQq(S)V;
+		// 39
+		virtualMethodRef Patient/setLenTs(S)V;
+		// 40
+		virtualMethodRef Patient/getHoten()[B;
+		// 41
+		staticMethodRef 0.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+		// 42
+		virtualMethodRef Patient/getNgaysinh()[B;
+		// 43
+		virtualMethodRef Patient/getQuequan()[B;
+		// 44
+		virtualMethodRef Patient/getMabenhnhan()[B;
+		// 45
+		virtualMethodRef Patient/getGioitinh()[B;
+		// 46
+		virtualMethodRef Patient/getDiung()[B;
+		// 47
+		virtualMethodRef Patient/getTieusu()[B;
+		// 48
+		virtualMethodRef Patient/getLenPin()S;
+		// 49
+		staticMethodRef 0.16.1([BS[BSS)S;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+		// 50
+		virtualMethodRef 0.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		// 51
+		virtualMethodRef Patient/getLenHoten()S;
+		// 52
+		virtualMethodRef Patient/getLenNs()S;
+		// 53
+		virtualMethodRef Patient/getLenQq()S;
+		// 54
+		virtualMethodRef Patient/getLenGt()S;
+		// 55
+		virtualMethodRef Patient/getLenMbn()S;
+		// 56
+		virtualMethodRef Patient/getLenTs()S;
+		// 57
+		virtualMethodRef 0.10.4(SS)V;		// sendBytes(SS)V
+		// 58
+		virtualMethodRef Patient/getLenDu()S;
+		// 59
+		staticMethodRef 2.0.0()V;		// java/lang/Object.<init>()V
+		// 60
+		staticMethodRef 0.3.0()V;		// javacard/framework/Applet.<init>()V
+		// 61
+		classRef Patient;
+		// 62
+		staticMethodRef Patient/<init>()V;
+		// 63
+		staticMethodRef BenhNhan/<init>()V;
+		// 64
+		virtualMethodRef 0.3.1()V;		// register()V
+		// 65
+		staticMethodRef 0.8.13(SB)[B;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+		// 66
+		classRef BenhNhan;
+		// 67
+		staticFieldRef short BenhNhan/counter;
+		// 68
+		staticMethodRef 0.8.18()V;		// javacard/framework/JCSystem.requestObjectDeletion()V
+		// 69
+		virtualMethodRef 0.3.3()Z;		// selectingApplet()Z
+		// 70
+		virtualMethodRef 0.10.1()[B;		// getBuffer()[B
+		// 71
+		virtualMethodRef 0.10.6()S;		// setIncomingAndReceive()S
+		// 72
+		staticMethodRef BenhNhan/init_bn(Ljavacard/framework/APDU;S)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 73
+		staticMethodRef BenhNhan/get_pin(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 74
+		staticMethodRef BenhNhan/get_info_patient(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+		// 75
+		staticMethodRef BenhNhan/get_tieusu(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+	}
+
+	.class public BenhNhan 0 extends 0.3 {		// extends javacard/framework/Applet
+
+		.fields {
+			private Patient patient 0;		// Lcom/example/Patient;
+			private byte[] tempBuffer 1;		// [B
+			private static short counter;		// S
+			private static final byte INS_INIT_BN = 16;		// B
+			private static final byte UNBLOCK_CARD = 17;		// B
+			private static final byte INS_RQPIN = 18;		// B
+			private static final byte INS_GETINFO = 19;		// B
+			private static final byte INS_GETTSBA = 20;		// B
+			private static final byte INS_GETDU = 21;		// B
+			private static final byte INS_SETTIEUSU = 22;		// B
+			private static final byte INS_SETCHATDU = 23;		// B
+			private static final byte CLEAR_CARD = 25;		// B
+			private static final byte CHECK_PIN = 32;		// B
+			private static boolean block_card;		// Z
+			private static final byte[] abc = {58,0,1};		// [B
+		}
+
+		.publicMethodTable 7 {
+			equals(Ljava/lang/Object;)Z;
+			register()V;
+			register([BSB)V;
+			selectingApplet()Z;
+			deselect()V;
+			getShareableInterfaceObject(Ljavacard/framework/AID;B)Ljavacard/framework/Shareable;;
+			select()Z;
+			process(Ljavacard/framework/APDU;)V;
+		}
+
+		.packageMethodTable 0 {
+		}
+
+		.implementedInterfaceInfoTable { 
+			.interface 1.0 { 		// javacardx/apdu/ExtendedLength
+			}
+
+		}
+
+		.method public static install([BSB)V 0 {
+			.stack 2;
+			.locals 0;
+
+				L0:	new 66;		// com/example/BenhNhan
+					dup;
+					invokespecial 63;		// com/example/BenhNhan.<init>()V
+					pop;
+					return;
+		}
+
+		.method public <init>()V 1 {
+			.stack 3;
+			.locals 0;
+
+				L0:	aload_0;
+					invokespecial 60;		// javacard/framework/Applet.<init>()V
+					aload_0;
+					new 61;		// com/example/Patient
+					dup;
+					invokespecial 62;		// com/example/Patient.<init>()V
+					putfield_a 0;		// reference com/example/BenhNhan.patient
+					aload_0;
+					invokevirtual 64;		// register()V
+					aload_0;
+					sspush 256;
+					sconst_2;
+					invokestatic 65;		// javacard/framework/JCSystem.makeTransientByteArray(SB)[B
+					putfield_a 1;		// reference com/example/BenhNhan.tempBuffer
+					sconst_3;
+					putstatic_s 67;		// short com/example/BenhNhan.counter
+					invokestatic 68;		// javacard/framework/JCSystem.requestObjectDeletion()V
+					return;
+		}
+
+		.method public process(Ljavacard/framework/APDU;)V 7 {
+			.stack 3;
+			.locals 2;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_0;
+					invokevirtual 69;		// selectingApplet()Z
+					ifeq L2;
+				L1:	return;
+				L2:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_2;
+				L3:	aload_1;
+					invokevirtual 71;		// setIncomingAndReceive()S
+					sstore_3;
+				L4:	aload_2;
+					sconst_1;
+					baload;
+					stableswitch L15 16 32 L5 L14 L6 L7 L8 L9 L10 L11 L15 L12 L15 L15 L15 L15 L15 L15 L13;
+				L5:	aload_0;
+					aload_1;
+					sload_3;
+					invokespecial 72;		// com/example/BenhNhan.init_bn(Ljavacard/framework/APDU;S)V
+					goto L16;
+				L6:	aload_0;
+					aload_1;
+					invokespecial 73;		// com/example/BenhNhan.get_pin(Ljavacard/framework/APDU;)V
+					goto L16;
+				L7:	aload_0;
+					aload_1;
+					invokespecial 74;		// com/example/BenhNhan.get_info_patient(Ljavacard/framework/APDU;)V
+					goto L16;
+				L8:	aload_0;
+					aload_1;
+					invokespecial 75;		// com/example/BenhNhan.get_tieusu(Ljavacard/framework/APDU;)V
+					goto L16;
+				L9:	aload_0;
+					aload_1;
+					invokespecial 18;		// com/example/BenhNhan.get_chatdu(Ljavacard/framework/APDU;)V
+					goto L16;
+				L10:	aload_0;
+					aload_1;
+					sload_3;
+					invokespecial 19;		// com/example/BenhNhan.set_tsba(Ljavacard/framework/APDU;S)V
+					goto L16;
+				L11:	aload_0;
+					aload_1;
+					sload_3;
+					invokespecial 20;		// com/example/BenhNhan.set_chatdu(Ljavacard/framework/APDU;S)V
+					goto L16;
+				L12:	aload_0;
+					aload_1;
+					invokespecial 21;		// com/example/BenhNhan.clear_card(Ljavacard/framework/APDU;)V
+					goto L16;
+				L13:	aload_0;
+					aload_1;
+					sload_3;
+					invokespecial 22;		// com/example/BenhNhan.processCard(Ljavacard/framework/APDU;S)V
+					goto L16;
+				L14:	aload_0;
+					aload_1;
+					invokespecial 23;		// com/example/BenhNhan.unblockcard(Ljavacard/framework/APDU;)V
+					goto L16;
+				L15:	sspush 27904;
+					invokestatic 24;		// javacard/framework/ISOException.throwIt(S)V
+				L16:	return;
+		}
+
+		.method private processCard(Ljavacard/framework/APDU;S)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_3;
+				L1:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					getstatic_b 26;		// boolean com/example/BenhNhan.block_card
+					ifeq L3;
+				L2:	sspush 27011;
+					invokestatic 24;		// javacard/framework/ISOException.throwIt(S)V
+					return;
+				L3:	aload_3;
+					sconst_5;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 27;		// getPin()[B
+					sconst_0;
+					sload_2;
+					invokestatic 28;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+					ifne L5;
+				L4:	aload_1;
+					sconst_1;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					aload_1;
+					getstatic_a 30;		// reference com/example/BenhNhan.abc
+					sconst_1;
+					sconst_1;
+					invokevirtual 31;		// sendBytesLong([BSS)V
+					goto L8;
+				L5:	getstatic_s 67;		// short com/example/BenhNhan.counter
+					sconst_1;
+					ssub;
+					putstatic_s 67;		// short com/example/BenhNhan.counter
+					getstatic_s 67;		// short com/example/BenhNhan.counter
+					ifne L7;
+				L6:	sconst_1;
+					putstatic_b 26;		// boolean com/example/BenhNhan.block_card
+					sspush 27011;
+					invokestatic 24;		// javacard/framework/ISOException.throwIt(S)V
+					goto L8;
+				L7:	aload_1;
+					sconst_1;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					aload_1;
+					getstatic_a 30;		// reference com/example/BenhNhan.abc
+					sconst_2;
+					sconst_1;
+					invokevirtual 31;		// sendBytesLong([BSS)V
+				L8:	return;
+		}
+
+		.method private unblockcard(Ljavacard/framework/APDU;)V {
+			.stack 1;
+			.locals 0;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	sconst_3;
+					putstatic_s 67;		// short com/example/BenhNhan.counter
+					sconst_0;
+					putstatic_b 26;		// boolean com/example/BenhNhan.block_card
+					return;
+		}
+
+		.method private clear_card(Ljavacard/framework/APDU;)V {
+			.stack 4;
+			.locals 0;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 32;		// setLenDu(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 33;		// setLenGt(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 34;		// setLenHoten(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 35;		// setLenMbn(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 36;		// setLenNs(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 37;		// setLenPin(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 38;		// setLenQq(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sconst_0;
+					invokevirtual 39;		// setLenTs(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 40;		// getHoten()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 42;		// getNgaysinh()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 43;		// getQuequan()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 44;		// getMabenhnhan()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 45;		// getGioitinh()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 27;		// getPin()[B
+					sconst_0;
+					bspush 18;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 46;		// getDiung()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 47;		// getTieusu()[B
+					sconst_0;
+					bspush 64;
+					sconst_0;
+					invokestatic 41;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					pop;
+					return;
+		}
+
+		.method private get_pin(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 2;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_2;
+				L1:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 48;		// getLenPin()S
+					sstore_3;
+				L2:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 27;		// getPin()[B
+					sconst_0;
+					aload_2;
+					sconst_0;
+					sload_3;
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload_3;
+					invokevirtual 50;		// setOutgoingAndSend(SS)V
+					return;
+		}
+
+		.method private get_info_patient(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 5;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_2;
+				L1:	sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 53;		// getLenQq()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 54;		// getLenGt()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 55;		// getLenMbn()S
+					sadd;
+					sstore_3;
+				L2:	sconst_0;
+					sstore 4;
+				L3:	sload_3;
+					newarray 11;
+					astore 5;
+				L4:	aload 5;
+					sconst_0;
+					bspush 58;
+					bastore;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 40;		// getHoten()[B
+					sconst_0;
+					aload 5;
+					sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 42;		// getNgaysinh()[B
+					sconst_0;
+					aload 5;
+					sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 43;		// getQuequan()[B
+					sconst_0;
+					aload 5;
+					sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 53;		// getLenQq()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 45;		// getGioitinh()[B
+					sconst_0;
+					aload 5;
+					sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 53;		// getLenQq()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 54;		// getLenGt()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 44;		// getMabenhnhan()[B
+					sconst_0;
+					aload 5;
+					sconst_1;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 53;		// getLenQq()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 54;		// getLenGt()S
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 55;		// getLenMbn()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+				L5:	sload_3;
+					ifle L12;
+				L6:	sload_3;
+					sspush 255;
+					if_scmple L8;
+				L7:	sspush 255;
+					goto L9;
+				L8:	sload_3;
+				L9:	sstore 6;
+				L10:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					aload_1;
+					sload 6;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					aload_1;
+					aload 5;
+					sload 4;
+					sload 6;
+					invokevirtual 31;		// sendBytesLong([BSS)V
+					sload 4;
+					sload 6;
+					sadd;
+					sstore 4;
+					sload_3;
+					sload 6;
+					ssub;
+					sstore_3;
+				L11:	goto L5;
+				L12:	return;
+		}
+
+		.method private get_tieusu(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 56;		// getLenTs()S
+					ifeq L3;
+				L1:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_2;
+				L2:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					aload_1;
+					bspush 65;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 47;		// getTieusu()[B
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 56;		// getLenTs()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 56;		// getLenTs()S
+					invokevirtual 57;		// sendBytes(SS)V
+				L3:	return;
+		}
+
+		.method private get_chatdu(Ljavacard/framework/APDU;)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 58;		// getLenDu()S
+					ifeq L3;
+				L1:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_2;
+				L2:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					aload_1;
+					bspush 65;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 46;		// getDiung()[B
+					sconst_0;
+					aload_2;
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 58;		// getLenDu()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 58;		// getLenDu()S
+					invokevirtual 57;		// sendBytes(SS)V
+				L3:	return;
+		}
+
+		.method private set_tsba(Ljavacard/framework/APDU;S)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload_2;
+					invokevirtual 39;		// setLenTs(S)V
+					aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_3;
+				L1:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					aload_1;
+					bspush 65;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					aload_3;
+					sconst_5;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 47;		// getTieusu()[B
+					sconst_0;
+					sload_2;
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload_2;
+					invokevirtual 57;		// sendBytes(SS)V
+					return;
+		}
+
+		.method private set_chatdu(Ljavacard/framework/APDU;S)V {
+			.stack 5;
+			.locals 1;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload_2;
+					invokevirtual 32;		// setLenDu(S)V
+					aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore_3;
+				L1:	aload_1;
+					invokevirtual 25;		// setOutgoing()S
+					pop;
+					aload_1;
+					bspush 65;
+					invokevirtual 29;		// setOutgoingLength(S)V
+					aload_3;
+					sconst_5;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 46;		// getDiung()[B
+					sconst_0;
+					sload_2;
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					aload_1;
+					sconst_0;
+					sload_2;
+					invokevirtual 57;		// sendBytes(SS)V
+					return;
+		}
+
+		.method private init_bn(Ljavacard/framework/APDU;S)V {
+			.stack 5;
+			.locals 8;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	sconst_0;
+					dup;
+					sstore 7;
+				L1:	dup;
+					sstore 6;
+				L2:	dup;
+					sstore 5;
+				L3:	dup;
+					sstore 4;
+				L4:	sstore_3;
+				L5:	aload_1;
+					invokevirtual 70;		// getBuffer()[B
+					astore 8;
+				L6:	aload 8;
+					sconst_5;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sconst_0;
+					sload_2;
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					sconst_0;
+					sstore 9;
+				L7:	sload 9;
+					sload_2;
+					if_scmpge_w L22;
+				L8:	getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload 9;
+					baload;
+					bspush 46;
+					if_scmpne_w L21;
+				L9:	sload_3;
+					ifne L11;
+				L10:	sload 9;
+					sstore_3;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload_3;
+					invokevirtual 34;		// setLenHoten(S)V
+					goto L21;
+				L11:	sload 4;
+					ifne L13;
+				L12:	sload 9;
+					sstore 4;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload 4;
+					sload_3;
+					ssub;
+					sconst_1;
+					ssub;
+					invokevirtual 36;		// setLenNs(S)V
+					goto L21;
+				L13:	sload 5;
+					ifne L15;
+				L14:	sload 9;
+					sstore 5;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload 5;
+					sload 4;
+					ssub;
+					sconst_1;
+					ssub;
+					invokevirtual 38;		// setLenQq(S)V
+					goto L21;
+				L15:	sload 6;
+					ifne L17;
+				L16:	sload 9;
+					sstore 6;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload 6;
+					sload 5;
+					ssub;
+					sconst_1;
+					ssub;
+					invokevirtual 33;		// setLenGt(S)V
+					goto L21;
+				L17:	sload 9;
+					sstore 7;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload 7;
+					sload 6;
+					ssub;
+					sconst_1;
+					ssub;
+					invokevirtual 35;		// setLenMbn(S)V
+					sload_2;
+					sload 7;
+					ssub;
+					sconst_1;
+					ssub;
+					sstore 10;
+				L18:	sload 10;
+					bspush 8;
+					if_scmple L20;
+				L19:	sspush 27264;
+					invokestatic 24;		// javacard/framework/ISOException.throwIt(S)V
+					return;
+				L20:	getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					sload 10;
+					invokevirtual 37;		// setLenPin(S)V
+				L21:	sinc 9 1;
+					goto_w L7;
+				L22:	getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 40;		// getHoten()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 51;		// getLenHoten()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload_3;
+					sconst_1;
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 42;		// getNgaysinh()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 52;		// getLenNs()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload 4;
+					sconst_1;
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 43;		// getQuequan()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 53;		// getLenQq()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload 5;
+					sconst_1;
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 45;		// getGioitinh()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 54;		// getLenGt()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload 6;
+					sconst_1;
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 44;		// getMabenhnhan()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 55;		// getLenMbn()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					getfield_a_this 1;		// reference com/example/BenhNhan.tempBuffer
+					sload 7;
+					sconst_1;
+					sadd;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 27;		// getPin()[B
+					sconst_0;
+					getfield_a_this 0;		// reference com/example/BenhNhan.patient
+					invokevirtual 48;		// getLenPin()S
+					invokestatic 49;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					return;
+		}
+
+	}
+
+	.class public Patient 1 extends 2.0 {		// extends java/lang/Object
+
+		.fields {
+			private byte[] hoten 0;		// [B
+			private byte[] ngaysinh 1;		// [B
+			private byte[] gioitinh 2;		// [B
+			private byte[] quequan 3;		// [B
+			private byte[] mabenhnhan 4;		// [B
+			private byte[] pin 5;		// [B
+			private byte[] tieusu 6;		// [B
+			private byte[] diung 7;		// [B
+			private short len_hoten 8;		// S
+			private short len_ns 9;		// S
+			private short len_gt 10;		// S
+			private short len_qq 11;		// S
+			private short len_mbn 12;		// S
+			private short len_pin 13;		// S
+			private short len_ts 14;		// S
+			private short len_du 15;		// S
+		}
+
+		.publicMethodTable 1 {
+			equals(Ljava/lang/Object;)Z;
+			getHoten()[B;
+			setHoten([B)V;
+			getNgaysinh()[B;
+			setNgaysinh([B)V;
+			getGioitinh()[B;
+			setGioitinh([B)V;
+			getQuequan()[B;
+			setQuequan([B)V;
+			getMabenhnhan()[B;
+			setMabenhnhan([B)V;
+			getPin()[B;
+			setPin([B)V;
+			getTieusu()[B;
+			setTieusu([B)V;
+			getDiung()[B;
+			setDiung([B)V;
+			getLenHoten()S;
+			setLenHoten(S)V;
+			getLenNs()S;
+			setLenNs(S)V;
+			getLenGt()S;
+			setLenGt(S)V;
+			getLenQq()S;
+			setLenQq(S)V;
+			getLenMbn()S;
+			setLenMbn(S)V;
+			getLenPin()S;
+			setLenPin(S)V;
+			getLenTs()S;
+			setLenTs(S)V;
+			getLenDu()S;
+			setLenDu(S)V;
+		}
+
+		.packageMethodTable 0 {
+		}
+
+		.method public <init>()V 0 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					invokespecial 59;		// java/lang/Object.<init>()V
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 2;		// reference com/example/Patient.hoten
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 3;		// reference com/example/Patient.gioitinh
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 4;		// reference com/example/Patient.ngaysinh
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 5;		// reference com/example/Patient.quequan
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 6;		// reference com/example/Patient.mabenhnhan
+					aload_0;
+					bspush 8;
+					newarray 11;
+					putfield_a 7;		// reference com/example/Patient.pin
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 8;		// reference com/example/Patient.tieusu
+					aload_0;
+					bspush 64;
+					newarray 11;
+					putfield_a 9;		// reference com/example/Patient.diung
+					return;
+		}
+
+		.method public getHoten()[B 1 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 2;		// reference com/example/Patient.hoten
+					areturn;
+		}
+
+		.method public setHoten([B)V 2 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 2;		// reference com/example/Patient.hoten
+					return;
+		}
+
+		.method public getNgaysinh()[B 3 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 4;		// reference com/example/Patient.ngaysinh
+					areturn;
+		}
+
+		.method public setNgaysinh([B)V 4 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 4;		// reference com/example/Patient.ngaysinh
+					return;
+		}
+
+		.method public getGioitinh()[B 5 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 3;		// reference com/example/Patient.gioitinh
+					areturn;
+		}
+
+		.method public setGioitinh([B)V 6 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 3;		// reference com/example/Patient.gioitinh
+					return;
+		}
+
+		.method public getQuequan()[B 7 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 5;		// reference com/example/Patient.quequan
+					areturn;
+		}
+
+		.method public setQuequan([B)V 8 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 5;		// reference com/example/Patient.quequan
+					return;
+		}
+
+		.method public getMabenhnhan()[B 9 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 6;		// reference com/example/Patient.mabenhnhan
+					areturn;
+		}
+
+		.method public setMabenhnhan([B)V 10 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 6;		// reference com/example/Patient.mabenhnhan
+					return;
+		}
+
+		.method public getPin()[B 11 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 7;		// reference com/example/Patient.pin
+					areturn;
+		}
+
+		.method public setPin([B)V 12 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 7;		// reference com/example/Patient.pin
+					return;
+		}
+
+		.method public getTieusu()[B 13 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 8;		// reference com/example/Patient.tieusu
+					areturn;
+		}
+
+		.method public setTieusu([B)V 14 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 8;		// reference com/example/Patient.tieusu
+					return;
+		}
+
+		.method public getDiung()[B 15 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_a_this 9;		// reference com/example/Patient.diung
+					areturn;
+		}
+
+		.method public setDiung([B)V 16 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					aload_1;
+					putfield_a 9;		// reference com/example/Patient.diung
+					return;
+		}
+
+		.method public getLenHoten()S 17 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 10;		// short com/example/Patient.len_hoten
+					sreturn;
+		}
+
+		.method public setLenHoten(S)V 18 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 10;		// short com/example/Patient.len_hoten
+					return;
+		}
+
+		.method public getLenNs()S 19 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 11;		// short com/example/Patient.len_ns
+					sreturn;
+		}
+
+		.method public setLenNs(S)V 20 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 11;		// short com/example/Patient.len_ns
+					return;
+		}
+
+		.method public getLenGt()S 21 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 12;		// short com/example/Patient.len_gt
+					sreturn;
+		}
+
+		.method public setLenGt(S)V 22 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 12;		// short com/example/Patient.len_gt
+					return;
+		}
+
+		.method public getLenQq()S 23 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 13;		// short com/example/Patient.len_qq
+					sreturn;
+		}
+
+		.method public setLenQq(S)V 24 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 13;		// short com/example/Patient.len_qq
+					return;
+		}
+
+		.method public getLenMbn()S 25 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 14;		// short com/example/Patient.len_mbn
+					sreturn;
+		}
+
+		.method public setLenMbn(S)V 26 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 14;		// short com/example/Patient.len_mbn
+					return;
+		}
+
+		.method public getLenPin()S 27 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 15;		// short com/example/Patient.len_pin
+					sreturn;
+		}
+
+		.method public setLenPin(S)V 28 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 15;		// short com/example/Patient.len_pin
+					return;
+		}
+
+		.method public getLenTs()S 29 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 16;		// short com/example/Patient.len_ts
+					sreturn;
+		}
+
+		.method public setLenTs(S)V 30 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 16;		// short com/example/Patient.len_ts
+					return;
+		}
+
+		.method public getLenDu()S 31 {
+			.stack 1;
+			.locals 0;
+
+				L0:	getfield_s_this 17;		// short com/example/Patient.len_du
+					sreturn;
+		}
+
+		.method public setLenDu(S)V 32 {
+			.stack 2;
+			.locals 0;
+
+				L0:	aload_0;
+					sload_1;
+					putfield_s 17;		// short com/example/Patient.len_du
+					return;
+		}
+
+	}
+
+}

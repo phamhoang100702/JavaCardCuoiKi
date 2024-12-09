@@ -1,17 +1,21 @@
 package com.example;
+
 public class Patient {
-    private byte[] hoten, ngaysinh, gioitinh, quequan, mabenhnhan, pin, tieusu, diung;
-    private short len_hoten, len_ns, len_gt, len_qq, len_mbn, len_pin, len_ts, len_du;
+    private byte[] hoten, ngaysinh, gioitinh, quequan, mabenhnhan, sdt, pin, tieusu, diung, balance, picture;
+    private short len_hoten, len_ns, len_gt, len_qq, len_sdt, len_mbn, len_pin, len_ts, len_du, len_balance, len_picture;
 
     public Patient() {
-        hoten = new byte[64];
-        gioitinh = new byte[64];
-        ngaysinh = new byte[64];
-        quequan = new byte[64];
-        mabenhnhan = new byte[64];
+        hoten = new byte[80];
+        gioitinh = new byte[80];
+        ngaysinh = new byte[80];
+        quequan = new byte[80];
+        sdt = new byte[80];
+        mabenhnhan = new byte[80];
         pin = new byte[8];
-        tieusu = new byte[64];
-        diung = new byte[64];
+        tieusu = new byte[80];
+        diung = new byte[80];
+        balance = new byte[80];
+        picture = new byte[1024];
     }
 
     // Getters and setters for each field
@@ -26,6 +30,9 @@ public class Patient {
 
     public byte[] getQuequan() { return quequan; }
     public void setQuequan(byte[] quequan) { this.quequan = quequan; }
+
+    public byte[] getSdt() { return sdt; }
+    public void setSdt(byte[] sdt) { this.sdt = sdt; }
 
     public byte[] getMabenhnhan() { return mabenhnhan; }
     public void setMabenhnhan(byte[] mabenhnhan) { this.mabenhnhan = mabenhnhan; }
@@ -48,6 +55,9 @@ public class Patient {
     public short getLenGt() { return len_gt; }
     public void setLenGt(short len_gt) { this.len_gt = len_gt; }
 
+    public short getLenSdt() { return len_sdt; }
+    public void setLenSdt(short len_sdt) { this.len_sdt = len_sdt; }
+
     public short getLenQq() { return len_qq; }
     public void setLenQq(short len_qq) { this.len_qq = len_qq; }
 
@@ -62,4 +72,16 @@ public class Patient {
 
     public short getLenDu() { return len_du; }
     public void setLenDu(short len_du) { this.len_du = len_du; }
+
+    public byte[] getBalance() { return balance; }
+    public void setBalance(byte[] balance) { this.balance = balance; }
+
+    public short getLenBalance() { return len_balance; }
+    public void setLenBalance(short len_balance) { this.len_balance = len_balance; }
+
+    public byte[] getPicture() { return picture; }
+    public void setPicture(byte[] picture) { this.picture = picture; }
+
+    public short getLenPicture() { return len_picture; }
+    public void setLenPicture(short len_picture) { this.len_picture = len_picture; }
 }

@@ -6,8 +6,11 @@ import javacardx.apdu.ExtendedLength;
 public class BenhNhan extends Applet implements ExtendedLength{
 
     // Instance of the Patient class to hold patient information
-    private Patient patient;
+    private static Patient patient;
 
+	private static short MAX_SIZE = 1024;
+	
+	private static short dataLen;
     // Counter used for various operations, such as PIN attempts
     private static short counter;
 
@@ -30,19 +33,47 @@ public class BenhNhan extends Applet implements ExtendedLength{
     private final static byte[] abc = {(byte) 0x3A, (byte) 0x00, (byte) 0x01};
 
     // Temporary buffer for various operations
-    private byte[] tempBuffer;
+    private static byte[] tempBuffer;
 
     public static void install(byte[] bArray, short bOffset, byte bLength) {
         new BenhNhan();
     }
 
-    public BenhNhan() {
-        patient = new Patient();
-        register();
-        tempBuffer = JCSystem.makeTransientByteArray((short) 256, JCSystem.CLEAR_ON_DESELECT);
-        counter = 3;
-        JCSystem.requestObjectDeletion();
-    }
+public BenhNhan() {
+    // Initialize the patient instance
+    patient = new Patient();
+
+    // Set patient details
+    patient.setHoten(new byte[]{'M', 'a', 'i', ' ', 'T', 'r', 'u', 'n', 'g', ' ', 'K', 'i', 'e', 'n'});
+    patient.setQuequan(new byte[]{'S', 'o', 'n', ' ', 'L', 'a'});
+    patient.setNgaysinh(new byte[]{'0', '7', '/', '0', '6', '/', '2', '0', '0', '2'});
+    patient.setGioitinh(new byte[]{'N', 'a', 'm'});
+    patient.setMabenhnhan(new byte[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
+    patient.setSdt(new byte[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'});
+    patient.setPin(new byte[]{'1', '2', '3', '4', '5', '6', '7', '8'});
+
+    // Initialize lengths (if needed)
+    patient.setLenHoten((short) 14);
+    patient.setLenQq((short) 6);
+    patient.setLenNs((short) 10);
+    patient.setLenGt((short) 3);
+    patient.setLenMbn((short) 10);
+    patient.setLenSdt((short) 10);
+    patient.setLenPin((short) 8);
+
+    // Register the applet
+    register();
+
+    // Create a transient buffer
+    tempBuffer = JCSystem.makeTransientByteArray((short) MAX_SIZE, JCSystem.CLEAR_ON_DESELECT);
+
+    // Initialize other variables
+    counter = 3;
+
+    // Request object deletion
+    JCSystem.requestObjectDeletion();
+}
+
 
     public void process(APDU apdu) {
         if (selectingApplet()) {
@@ -50,9 +81,21 @@ public class BenhNhan extends Applet implements ExtendedLength{
         }
         byte[] buf = apdu.getBuffer();
         short len = apdu.setIncomingAndReceive();
+        short pointer = 0;
         switch (buf[ISO7816.OFFSET_INS]) {
             case INS_INIT_BN:
-                init_bn(apdu, len);
+            	dataLen = apdu.getIncomingLength();
+                if (dataLen > MAX_SIZE) {
+                    ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+                }
+                short dataOffset = apdu.getOffsetCdata();
+                pointer = 0;
+                while (len > 0) {
+                    Util.arrayCopy(buf, dataOffset, tempBuffer, pointer, len);
+                    pointer += len;
+                    len = apdu.receiveBytes(dataOffset);
+                }
+                init_bn(dataLen);
                 break;
             case INS_RQPIN:
                 get_pin(apdu);
@@ -128,6 +171,7 @@ public class BenhNhan extends Applet implements ExtendedLength{
         patient.setLenGt((short) 0);
         patient.setLenHoten((short) 0);
         patient.setLenMbn((short) 0);
+        patient.setLenSdt((short)0);
         patient.setLenNs((short) 0);
         patient.setLenPin((short) 0);
         patient.setLenQq((short) 0);
@@ -148,32 +192,60 @@ public class BenhNhan extends Applet implements ExtendedLength{
 		Util.arrayCopy(patient.getPin(), (short) 0, buffer, (short) 0, pinLength);
 		apdu.setOutgoingAndSend((short) 0, pinLength);
 	}
+	
+private void get_info_patient(APDU apdu) {
+    byte[] buffer = apdu.getBuffer();
 
+    // Calculate the total length with separators
+    short totalLength = (short) (patient.getLenHoten() + 1 + patient.getLenNs() + 1 +
+                                patient.getLenQq() + 1 + patient.getLenGt() + 1 +
+                                patient.getLenMbn() + 1 + patient.getLenSdt());
 
-	private void get_info_patient(APDU apdu) {
-		byte[] buffer = apdu.getBuffer();
-		short totalLength = (short) (1 + patient.getLenHoten() + patient.getLenNs() + patient.getLenQq() + patient.getLenGt() + patient.getLenMbn());
-		short offset = 0;
+    short le = apdu.setOutgoing();
+    apdu.setOutgoingLength(totalLength);
 
-		// Prepare the data to be sent
-		byte[] data = new byte[totalLength];
-		data[0] = (byte) 0x3a;
-		Util.arrayCopy(patient.getHoten(), (short) 0, data, (short) 1, patient.getLenHoten());
-		Util.arrayCopy(patient.getNgaysinh(), (short) 0, data, (short) (1 + patient.getLenHoten()), patient.getLenNs());
-		Util.arrayCopy(patient.getQuequan(), (short) 0, data, (short) (1 + patient.getLenHoten() + patient.getLenNs()), patient.getLenQq());
-		Util.arrayCopy(patient.getGioitinh(), (short) 0, data, (short) (1 + patient.getLenHoten() + patient.getLenNs() + patient.getLenQq()), patient.getLenGt());
-		Util.arrayCopy(patient.getMabenhnhan(), (short) 0, data, (short) (1 + patient.getLenHoten() + patient.getLenNs() + patient.getLenQq() + patient.getLenGt()), patient.getLenMbn());
+    short pointer = 0;
 
-		// Send the data in chunks if necessary
-		while (totalLength > 0) {
-        short chunkSize = (totalLength > 255) ? 255 : totalLength;
-        apdu.setOutgoing();
-        apdu.setOutgoingLength(chunkSize);
-        apdu.sendBytesLong(data, offset, chunkSize);
-        offset += chunkSize;
-        totalLength -= chunkSize;
-		}
-	}
+    // Prepare the data to be sent
+    byte[] data = new byte[totalLength];
+
+    // Append fields with separators
+    Util.arrayCopy(patient.getHoten(), (short) 0, data, pointer, patient.getLenHoten());
+    pointer += patient.getLenHoten();
+    data[pointer++] = (byte) 0x2E; // Separator '.'
+
+    Util.arrayCopy(patient.getNgaysinh(), (short) 0, data, pointer, patient.getLenNs());
+    pointer += patient.getLenNs();
+    data[pointer++] = (byte) 0x2E; // Separator '.'
+
+    Util.arrayCopy(patient.getQuequan(), (short) 0, data, pointer, patient.getLenQq());
+    pointer += patient.getLenQq();
+    data[pointer++] = (byte) 0x2E; // Separator '.'
+
+    Util.arrayCopy(patient.getGioitinh(), (short) 0, data, pointer, patient.getLenGt());
+    pointer += patient.getLenGt();
+    data[pointer++] = (byte) 0x2E; // Separator '.'
+
+    Util.arrayCopy(patient.getMabenhnhan(), (short) 0, data, pointer, patient.getLenMbn());
+    pointer += patient.getLenMbn();
+    data[pointer++] = (byte) 0x2E; // Separator '.'
+
+    Util.arrayCopy(patient.getSdt(), (short) 0, data, pointer, patient.getLenSdt());
+    pointer += patient.getLenSdt();
+
+    // Send the data in chunks if necessary
+    short sendLen;
+    short remainingLength = totalLength;
+    pointer = 0;
+
+    while (remainingLength > 0) {
+        sendLen = (remainingLength > le) ? le : remainingLength;
+        apdu.sendBytesLong(data, pointer, sendLen);
+        remainingLength -= sendLen;
+        pointer += sendLen;
+    }
+}
+
 
     private void get_tieusu(APDU apdu) {
         if (patient.getLenTs() != 0) {
@@ -213,14 +285,11 @@ public class BenhNhan extends Applet implements ExtendedLength{
         apdu.sendBytes((short) 0, len);
     }
 
-	private void init_bn(APDU apdu, short len) {
-		short tg1, tg2, tg3, tg4, tg5;
-		tg1 = tg2 = tg3 = tg4 = tg5 = 0;
-		byte[] buffer = apdu.getBuffer();
-		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, tempBuffer, (short) 0, len);
-
+	private void init_bn(short dataLen) {
+		short tg1, tg2, tg3, tg4, tg5, tg6;
+		tg1 = tg2 = tg3 = tg4 = tg5 = tg6 = 0;
 		// Locate the positions of the delimiter '.'
-		for (short i = 0; i < len; i++) {
+		for (short i = 0; i < dataLen; i++) {
 			if (tempBuffer[i] == (byte) 0x2e) { // 0x2e is the ASCII code for '.'
 				if (tg1 == 0) {
 					tg1 = i;
@@ -234,10 +303,13 @@ public class BenhNhan extends Applet implements ExtendedLength{
 				} else if (tg4 == 0) {
 					tg4 = i;
 					patient.setLenGt((short) (tg4 - tg3 - 1));
-				} else {
+				} else if(tg5 == 0){
 					tg5 = i;
-					patient.setLenMbn((short) (tg5 - tg4 - 1));
-					short pinLength = (short) (len - tg5 - 1); // Calculate actual PIN length
+					patient.setLenSdt((short) (tg5 - tg4 - 1));
+				} else {
+					tg6 = i;
+					patient.setLenMbn((short) (tg6 - tg5 - 1));
+					short pinLength = (short) (dataLen - tg6 - 1); // Calculate actual PIN length
 					if (pinLength > 8) {
 						// Throw the appropriate status word
 						ISOException.throwIt((short) 0x6A80);

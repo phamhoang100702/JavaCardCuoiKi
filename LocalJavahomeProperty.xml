@@ -2,8 +2,8 @@
 <Javac_Option>
 <ClassPaths/>
 <localJavaHomePath>C:\JavaCardKit\JDK</localJavaHomePath>
-<_Source>1.5</_Source>
-<_Target>1.5</_Target>
+<_Source>1.6</_Source>
+<_Target>1.6</_Target>
 <_Encoding>windows-1252</_Encoding>
 <_InheritClassPath>1</_InheritClassPath>
 <_GenAllDegugInfo>1</_GenAllDegugInfo>

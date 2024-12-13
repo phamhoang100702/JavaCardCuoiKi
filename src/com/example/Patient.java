@@ -15,7 +15,7 @@ public class Patient {
         tieusu = new byte[80];
         diung = new byte[80];
         balance = new byte[80];
-        picture = new byte[1024];
+        picture = new byte[32767];
     }
 
     // Getters and setters for each field
@@ -82,6 +82,6 @@ public class Patient {
     public byte[] getPicture() { return picture; }
     public void setPicture(byte[] picture) { this.picture = picture; }
 
-    public short getLenPicture() { return len_picture; }
+    public short getLenPicture() { return this.len_picture; }
     public void setLenPicture(short len_picture) { this.len_picture = len_picture; }
 }

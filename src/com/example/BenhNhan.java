@@ -8,7 +8,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
     // Instance of the Patient class to hold patient information
     private static Patient patient;
 
-    private static short MAX_SIZE = 1024;
+    private static short MAX_SIZE = 32767;
 
     private static short dataLen;
     // Counter used for various operations, such as PIN attempts
@@ -23,10 +23,12 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte INS_GETDU = (byte) 0x15; // Get patient's allergy information
     private static final byte INS_SETTIEUSU = (byte) 0x16; // Set patient's medical history
     private static final byte INS_SETCHATDU = (byte) 0x17; // Set patient's allergy information
-    private static final byte CLEAR_CARD = (byte) 0x19; // Clear all patient data
-    private static final byte CHECK_PIN = (byte) 0x20; // Check the PIN
-    private static final byte UPDATE_BN = (byte) 0x30; // Update patient data
-    private static final byte UPDATE_PIN = (byte) 0x31; // Update patient pin
+    private static final byte CLEAR_CARD = (byte) 0x18; // Clear all patient data
+    private static final byte CHECK_PIN = (byte) 0x19; // Check the PIN
+    private static final byte UPDATE_BN = (byte) 0x20; // Update patient data
+    private static final byte UPDATE_PIN = (byte) 0x21; // Update patient pin
+    private static final byte INS_UPDATE_PIC = (byte) 0x22; //Update patient picture
+    private static final byte INS_GET_PIC = (byte) 0x23; //Send patient picture
 
     // Flag indicating whether the card is blocked
     private static boolean block_card = false;
@@ -54,8 +56,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
         register();
 
         // Create a transient buffer
-        tempBuffer = JCSystem.makeTransientByteArray((short) MAX_SIZE, JCSystem.CLEAR_ON_DESELECT);
-		temp = JCSystem.makeTransientByteArray((short) MAX_SIZE, JCSystem.CLEAR_ON_DESELECT);
+        tempBuffer = new byte[MAX_SIZE];
+        temp = new byte[MAX_SIZE];
         // Initialize other variables
         counter = 3;
 
@@ -140,7 +142,12 @@ public class BenhNhan extends Applet implements ExtendedLength {
             case UNBLOCK_CARD:
                 unblockcard(apdu);
                 break;
-
+            case INS_UPDATE_PIC:
+                receivePicture(apdu, buf, len);
+                break;
+            case INS_GET_PIC:
+                sendPicture(apdu);
+                break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
                 break;
@@ -364,7 +371,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
         short tg1, tg2, tg3, tg4, tg5;
         tg1 = tg2 = tg3 = tg4 = tg5 = 0;
 
-		temp = tempBuffer;
+        temp = tempBuffer;
         // Locate the positions of the delimiter '.'
         for (short i = 0; i < dataLen; i++) {
             if (temp[i] == (byte) 0x2e) { // 0x2e is the ASCII code for '.'
@@ -394,12 +401,18 @@ public class BenhNhan extends Applet implements ExtendedLength {
         Util.arrayCopy(temp, (short)(tg3 + 1), patient.getGioitinh(), (short) 0, patient.getLenGt());
         Util.arrayCopy(temp, (short)(tg4 + 1), patient.getMabenhnhan(), (short) 0, patient.getLenMbn());
         Util.arrayCopy(temp, (short)(tg5 + 1), patient.getSdt(), (short) 0, patient.getLenSdt());
-        
+
     }
 
 
     private void update_pin(APDU apdu, short len) {
         try {
+            // Check if the PIN length is greater than 8
+            if (len > 8) {
+                // Return an error status word for wrong length (6700)
+                ISOException.throwIt((short) 0x6700);
+            }
+
             // Update PIN length in the patient object
             patient.setLenPin(len);
 
@@ -420,4 +433,43 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
     }
 
+    private void receivePicture(APDU apdu, byte[] buf, short recvLen) {
+        dataLen = apdu.getIncomingLength();
+        patient.setLenPicture(dataLen);
+        // Get the total length of incoming data
+        if (dataLen > patient.getPicture().length) {
+            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+        }
+
+        // Get the offset where data starts
+        short dataOffset = apdu.getOffsetCdata();
+        short pointer = 0;
+
+        while (recvLen > 0) {
+            // Copy received data into the patient's picture attribute
+            Util.arrayCopy(buf, dataOffset, patient.getPicture(), pointer, recvLen);
+            pointer += recvLen;
+
+            // Continue receiving the next chunk
+            recvLen = apdu.receiveBytes(dataOffset);
+        }
+
+    }
+
+    private void sendPicture(APDU apdu) {
+        short toSend = patient.getLenPicture();
+        byte[] picture = patient.getPicture();
+        short le = apdu.setOutgoing(); // Maximum length to send
+        apdu.setOutgoingLength(toSend);
+
+        short sendLen;
+        short pointer = 0;
+
+        while (toSend > 0) {
+            sendLen = (toSend > le) ? le : toSend;
+            apdu.sendBytesLong(picture, pointer, sendLen);
+            toSend -= sendLen;
+            pointer += sendLen;
+        }
+    }
 }

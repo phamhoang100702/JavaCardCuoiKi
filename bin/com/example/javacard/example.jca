@@ -1,5 +1,5 @@
 // converted by version  [v3.0.4]
-// on Fri Dec 13 02:00:56 ICT 2024
+// on Sun Dec 15 13:27:40 ICT 2024
 
 .package com/example {
 	.aid 0x11:0x22:0x33:0x44:0x55:0x0;
@@ -813,25 +813,6 @@
 					bspush 46;
 					bastore;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 56;		// getMabenhnhan()[B
-					sconst_0;
-					aload 6;
-					sload 5;
-					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getLenMbn()S
-					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
-					pop;
-					sload 5;
-					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getLenMbn()S
-					sadd;
-					sstore 5;
-					aload 6;
-					sload 5;
-					sinc 5 1;
-					bspush 46;
-					bastore;
-					getstatic_a 83;		// reference com/example/BenhNhan.patient
 					invokevirtual 67;		// getSdt()[B
 					sconst_0;
 					aload 6;
@@ -843,6 +824,25 @@
 					sload 5;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
 					invokevirtual 66;		// getLenSdt()S
+					sadd;
+					sstore 5;
+					aload 6;
+					sload 5;
+					sinc 5 1;
+					bspush 46;
+					bastore;
+					getstatic_a 83;		// reference com/example/BenhNhan.patient
+					invokevirtual 56;		// getMabenhnhan()[B
+					sconst_0;
+					aload 6;
+					sload 5;
+					getstatic_a 83;		// reference com/example/BenhNhan.patient
+					invokevirtual 65;		// getLenMbn()S
+					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					pop;
+					sload 5;
+					getstatic_a 83;		// reference com/example/BenhNhan.patient
+					invokevirtual 65;		// getLenMbn()S
 					sadd;
 					sstore 5;
 					sload_3;
@@ -1168,10 +1168,10 @@
 					sconst_1;
 					sadd;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 56;		// getMabenhnhan()[B
+					invokevirtual 67;		// getSdt()[B
 					sconst_0;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getLenMbn()S
+					invokevirtual 66;		// getLenSdt()S
 					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					getstatic_a 87;		// reference com/example/BenhNhan.temp
@@ -1179,10 +1179,10 @@
 					sconst_1;
 					sadd;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 67;		// getSdt()[B
+					invokevirtual 56;		// getMabenhnhan()[B
 					sconst_0;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 66;		// getLenSdt()S
+					invokevirtual 65;		// getLenMbn()S
 					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					getstatic_a 87;		// reference com/example/BenhNhan.temp
@@ -1219,7 +1219,7 @@
 					sstore 7;
 				L6:	sload 7;
 					getstatic_s 94;		// short com/example/BenhNhan.dataLen
-					if_scmpge L18;
+					if_scmpge_w L18;
 				L7:	getstatic_a 87;		// reference com/example/BenhNhan.temp
 					sload 7;
 					baload;
@@ -1278,8 +1278,15 @@
 					sconst_1;
 					ssub;
 					invokevirtual 47;		// setLenSdt(S)V
+					getstatic_a 83;		// reference com/example/BenhNhan.patient
+					getstatic_s 94;		// short com/example/BenhNhan.dataLen
+					sload 6;
+					ssub;
+					sconst_1;
+					ssub;
+					invokevirtual 46;		// setLenMbn(S)V
 				L17:	sinc 7 1;
-					goto L6;
+					goto_w L6;
 				L18:	getstatic_a 87;		// reference com/example/BenhNhan.temp
 					sconst_0;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
@@ -1327,10 +1334,10 @@
 					sconst_1;
 					sadd;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 56;		// getMabenhnhan()[B
+					invokevirtual 67;		// getSdt()[B
 					sconst_0;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getLenMbn()S
+					invokevirtual 66;		// getLenSdt()S
 					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					getstatic_a 87;		// reference com/example/BenhNhan.temp
@@ -1338,10 +1345,10 @@
 					sconst_1;
 					sadd;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 67;		// getSdt()[B
+					invokevirtual 56;		// getMabenhnhan()[B
 					sconst_0;
 					getstatic_a 83;		// reference com/example/BenhNhan.patient
-					invokevirtual 66;		// getLenSdt()S
+					invokevirtual 65;		// getLenMbn()S
 					invokestatic 97;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					return;

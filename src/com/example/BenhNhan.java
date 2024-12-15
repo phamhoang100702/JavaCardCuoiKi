@@ -263,12 +263,12 @@ public class BenhNhan extends Applet implements ExtendedLength {
         pointer += patient.getLenGt();
         data[pointer++] = (byte) 0x2E; // Separator '.'
 
-        Util.arrayCopy(patient.getMabenhnhan(), (short) 0, data, pointer, patient.getLenMbn());
-        pointer += patient.getLenMbn();
-        data[pointer++] = (byte) 0x2E; // Separator '.'
-
         Util.arrayCopy(patient.getSdt(), (short) 0, data, pointer, patient.getLenSdt());
         pointer += patient.getLenSdt();
+        data[pointer++] = (byte) 0x2E; // Separator '.'
+
+        Util.arrayCopy(patient.getMabenhnhan(), (short) 0, data, pointer, patient.getLenMbn());
+        pointer += patient.getLenMbn();
 
         // Send the data in chunks if necessary
         short sendLen;
@@ -362,8 +362,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
         Util.arrayCopy(temp, (short)(tg1 + 1), patient.getNgaysinh(), (short) 0, patient.getLenNs());
         Util.arrayCopy(temp, (short)(tg2 + 1), patient.getQuequan(), (short) 0, patient.getLenQq());
         Util.arrayCopy(temp, (short)(tg3 + 1), patient.getGioitinh(), (short) 0, patient.getLenGt());
-        Util.arrayCopy(temp, (short)(tg4 + 1), patient.getMabenhnhan(), (short) 0, patient.getLenMbn());
-        Util.arrayCopy(temp, (short)(tg5 + 1), patient.getSdt(), (short) 0, patient.getLenSdt());
+        Util.arrayCopy(temp, (short)(tg4 + 1), patient.getSdt(), (short) 0, patient.getLenSdt());
+        Util.arrayCopy(temp, (short)(tg5 + 1), patient.getMabenhnhan(), (short) 0, patient.getLenMbn());
         Util.arrayCopy(temp, (short)(tg6 + 1), patient.getPin(), (short) 0, patient.getLenPin());
     }
 
@@ -390,6 +390,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
                 } else {
                     tg5 = i;
                     patient.setLenSdt((short)(tg5 - tg4 - 1));
+                    patient.setLenMbn((short)(dataLen - tg5 - 1));
                 }
             }
         }
@@ -399,8 +400,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
         Util.arrayCopy(temp, (short)(tg1 + 1), patient.getNgaysinh(), (short) 0, patient.getLenNs());
         Util.arrayCopy(temp, (short)(tg2 + 1), patient.getQuequan(), (short) 0, patient.getLenQq());
         Util.arrayCopy(temp, (short)(tg3 + 1), patient.getGioitinh(), (short) 0, patient.getLenGt());
-        Util.arrayCopy(temp, (short)(tg4 + 1), patient.getMabenhnhan(), (short) 0, patient.getLenMbn());
-        Util.arrayCopy(temp, (short)(tg5 + 1), patient.getSdt(), (short) 0, patient.getLenSdt());
+        Util.arrayCopy(temp, (short)(tg4 + 1), patient.getSdt(), (short) 0, patient.getLenSdt());
+        Util.arrayCopy(temp, (short)(tg5 + 1), patient.getMabenhnhan(), (short) 0, patient.getLenMbn());
 
     }
 

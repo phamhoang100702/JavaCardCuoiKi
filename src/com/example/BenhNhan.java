@@ -2,6 +2,9 @@ package com.example;
 
 import javacard.framework.*;
 import javacardx.apdu.ExtendedLength;
+import javacard.security.*;
+import javacardx.crypto.*;
+import javacardx.shangmi.*;
 
 public class BenhNhan extends Applet implements ExtendedLength {
 
@@ -30,6 +33,19 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte INS_UPDATE_PIC = (byte) 0x22; //Update patient picture
     private static final byte INS_GET_PIC = (byte) 0x23; //Send patient picture
 
+	// AES key for encrypt and decrypt data
+	private AESKey aesKey;
+	private Cipher cipher;
+	private short aesKeyLen;
+	
+	// Signature by RSA algorythm for verify
+	private RSAPrivateKey rsaPrivKey;
+    private RSAPublicKey rsaPubKey;
+    private Signature rsaSig;
+    
+    // Random data to create AES key from PIN code
+    private RandomData randomData;
+
     // Flag indicating whether the card is blocked
     private static boolean block_card = false;
 
@@ -49,6 +65,21 @@ public class BenhNhan extends Applet implements ExtendedLength {
     }
 
     public BenhNhan() {
+    	// init for AES
+    	aesKeyLen = (short) (KeyBuilder.LENGTH_AES_128 / 8);
+    	aesKey = (AESKey) (KeyBuilder.buildKey(KeyBuilder.TYPE_AES, KeyBuilder.LENGTH_AES_128, false));
+    	cipher = Cipher.getInstance(Cipher.ALG_AES_BLOCK_128_CBC_NOPAD, false);
+    	
+    	// init for random data
+    	randomData = RandomData.getInstance(RandomData.ALG_PSEUDO_RANDOM);
+    	
+    	// init for RSA
+    	rsaSig = Signature.getInstance(Signature.ALG_RSA_MD5_PKCS1, false);
+    	KeyPair keyPair = new KeyPair(KeyPair.ALG_RSA, KeyBuilder.LENGTH_RSA_1024);
+    	keyPair.genKeyPair();
+    	rsaPrivKey = (RSAPrivateKey) keyPair.getPrivate();
+    	rsaPubKey = (RSAPublicKey) keyPair.getPublic();
+        
         // Initialize the patient instance
         patient = new Patient();
 
@@ -472,5 +503,40 @@ public class BenhNhan extends Applet implements ExtendedLength {
             toSend -= sendLen;
             pointer += sendLen;
         }
+    }
+    
+    private void setAesKeyFromPinCode() {
+    	JCSystem.beginTransaction();
+	    try {
+		    randomData.setSeed(patient.getPin(), (short) 0, (short) patient.getPin().length);
+			byte[] keyData = new byte[aesKeyLen];
+			randomData.generateData(keyData, (short) 0, aesKeyLen);
+			aesKey.setKey(keyData, (short) 0);
+			JCSystem.commitTransaction();
+	    } catch (Exception e) {
+		    JCSystem.abortTransaction();
+		    ISOException.throwIt(ISO7816.SW_DATA_INVALID);
+	    }
+    }
+    
+    private byte[] encryptAes(byte[] dataToEncrypt) {
+	    cipher.init(aesKey, Cipher.MODE_ENCRYPT);
+	    byte[] encryptedData = new byte[(short) dataToEncrypt.length];
+	    cipher.doFinal(dataToEncrypt, (short) 0, (short) dataToEncrypt.length, encryptedData, (short) 0);
+	    return encryptedData;
+    }
+    
+    private byte[] decryptAes(byte[] dataToDecrypt) {
+	    cipher.init(aesKey, Cipher.MODE_DECRYPT);
+	    byte[] decryptedData = new byte[(short) dataToDecrypt.length];
+	    cipher.doFinal(dataToDecrypt, (short) 0, (short) dataToDecrypt.length, decryptedData, (short) 0);
+	    return decryptedData;
+    }
+    
+    private byte[] signRsa(byte[] dataToSign) {
+	    rsaSig.init(rsaPrivKey, Signature.MODE_SIGN);
+	    byte[] signedBuffer = new byte[(short) (KeyBuilder.LENGTH_RSA_1024 / 8)];
+	    rsaSig.sign(dataToSign, (short) 0, (short) dataToSign.length, signedBuffer, (short) 0);
+	    return signedBuffer;
     }
 }

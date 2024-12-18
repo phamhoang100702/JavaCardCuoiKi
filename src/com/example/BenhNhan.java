@@ -12,7 +12,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
 
     private static short dataLen;
     // Counter used for various operations, such as PIN attempts
-    private static short counter;
+    private static byte counter = 0;
 
     // Instruction codes for various APDU commands
     private static final byte INS_INIT_BN = (byte) 0x10; // Initialize patient information
@@ -34,7 +34,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static boolean block_card = false;
 
     // Static array used for APDU responses
-    private final static byte[] abc = {
+    private static byte[] abc = {
         (byte) 0x3A,
         (byte) 0x00,
         (byte) 0x01
@@ -58,9 +58,6 @@ public class BenhNhan extends Applet implements ExtendedLength {
         // Create a transient buffer
         tempBuffer = new byte[MAX_SIZE];
         temp = new byte[MAX_SIZE];
-        // Initialize other variables
-        counter = 3;
-
         // Request object deletion
         JCSystem.requestObjectDeletion();
     }
@@ -167,13 +164,16 @@ public class BenhNhan extends Applet implements ExtendedLength {
 
         // Check if the provided PIN length matches the stored PIN length
         if (len != patient.getLenPin()) {
-            counter--; // Decrease counter for incorrect PIN
-            if (counter == 0) {
+            counter++; // Decrease counter for incorrect PIN
+            if (counter == 4) {
                 block_card = true; // Block the card
                 ISOException.throwIt((short) 0x6983); // Send "authentication method blocked" status
             } else {
                 apdu.setOutgoingLength((short) 1);
-                apdu.sendBytesLong(abc, (short) 2, (short) 1); // Send failure response
+				// Convert the counter value to a byte and send it as the response
+				byte[] response = new byte[1];
+				response[0] = (byte) counter; // Set the response to the current counter value
+				apdu.sendBytesLong(response, (short) 0, (short) 1); // Send failure response
             }
             return;
         }
@@ -186,20 +186,23 @@ public class BenhNhan extends Applet implements ExtendedLength {
             apdu.sendBytesLong(abc, (short) 1, (short) 1); // Send success response
         } else {
             // Incorrect PIN
-            counter--; // Decrease counter
-            if (counter == 0) {
+            counter++; // Decrease counter
+            if (counter == 4) {
                 block_card = true; // Block the card
                 ISOException.throwIt((short) 0x6983); // Send "authentication method blocked" status
             } else {
                 apdu.setOutgoingLength((short) 1);
-                apdu.sendBytesLong(abc, (short) 2, (short) 1); // Send failure response
+				// Convert the counter value to a byte and send it as the response
+				byte[] response = new byte[1];
+				response[0] = (byte) counter; // Set the response to the current counter value
+				apdu.sendBytesLong(response, (short) 0, (short) 1); // Send failure response
             }
         }
     }
 
 
     private void unblockcard(APDU apdu) {
-        counter = 3;
+        counter = 0;
         block_card = false;
     }
 

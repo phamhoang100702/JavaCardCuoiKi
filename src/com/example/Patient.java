@@ -5,16 +5,16 @@ public class Patient {
     private short len_hoten, len_ns, len_gt, len_qq, len_sdt, len_mbn, len_pin, len_ts, len_du, len_balance, len_picture;
 
     public Patient() {
-        hoten = new byte[80];
-        gioitinh = new byte[80];
-        ngaysinh = new byte[80];
-        quequan = new byte[80];
-        sdt = new byte[80];
-        mabenhnhan = new byte[80];
+        hoten = new byte[45];
+        gioitinh = new byte[10];
+        ngaysinh = new byte[40];
+        quequan = new byte[150];
+        sdt = new byte[12];
+        mabenhnhan = new byte[15];
         pin = new byte[8];
         tieusu = new byte[80];
         diung = new byte[80];
-        balance = new byte[80];
+        balance = new byte[20];
         picture = new byte[32767];
     }
 

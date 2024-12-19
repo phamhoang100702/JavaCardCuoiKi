@@ -7,19 +7,11 @@
 <FileNodes>
 <fnode>
 <fileName>src\com\example\Patient.java</fileName>
-<<<<<<< HEAD
-<line>57</line>
+<line>7</line>
 </fnode>
 <ActiveFile>
 <fileName>src\com\example\BenhNhan.java</fileName>
-<line>174</line>
-=======
-<line>16</line>
-</fnode>
-<ActiveFile>
-<fileName>src\com\example\BenhNhan.java</fileName>
-<line>0</line>
->>>>>>> 93aa7dc7b8455db8266753de98c649e48ba3fe34
+<line>323</line>
 </ActiveFile>
 </FileNodes>
 </StateInfo>

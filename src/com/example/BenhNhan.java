@@ -22,9 +22,9 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte UNBLOCK_CARD = (byte) 0x11; // Unblock the card
     private static final byte INS_RQPIN = (byte) 0x12; // Request PIN
     private static final byte INS_GETINFO = (byte) 0x13; // Get patient information
-    private static final byte INS_GETTSBA = (byte) 0x14; // Get patient's medical history
+    private static final byte INS_GETBALANCE = (byte) 0x14; // Get patient's medical history
     private static final byte INS_GETDU = (byte) 0x15; // Get patient's allergy information
-    private static final byte INS_SETTIEUSU = (byte) 0x16; // Set patient's medical history
+    private static final byte INS_UPDATEBALANCE = (byte) 0x16; // Set patient's medical history
     private static final byte INS_SETCHATDU = (byte) 0x17; // Set patient's allergy information
     private static final byte CLEAR_CARD = (byte) 0x18; // Clear all patient data
     private static final byte CHECK_PIN = (byte) 0x19; // Check the PIN
@@ -143,16 +143,16 @@ public class BenhNhan extends Applet implements ExtendedLength {
                 get_info_patient(apdu);
                 break;
 
-            case INS_GETTSBA:
-                get_tieusu(apdu);
+            case INS_GETBALANCE:
+                get_balance(apdu);
                 break;
 
             case INS_GETDU:
                 get_chatdu(apdu);
                 break;
 
-            case INS_SETTIEUSU:
-                set_tsba(apdu, len);
+            case INS_UPDATEBALANCE:
+                update_balance(apdu, len);
                 break;
 
             case INS_SETCHATDU:
@@ -317,33 +317,20 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
     }
 
-    private void get_tieusu(APDU apdu) {
-        if (patient.getLenTs() != 0) {
+    private void get_balance(APDU apdu) {
             byte[] buffer = apdu.getBuffer();
             apdu.setOutgoing();
-            apdu.setOutgoingLength((short) 65);
-            Util.arrayCopy(patient.getTieusu(), (short) 0, buffer, (short) 0, patient.getLenTs());
-            apdu.sendBytes((short) 0, patient.getLenTs());
-        }
+            apdu.setOutgoingLength(patient.getLenBalance());
+            Util.arrayCopy(patient.getBalance(), (short) 0, buffer, (short) 0, patient.getLenBalance());
+            apdu.sendBytes((short) 0, patient.getLenBalance());     
     }
 
-    private void get_chatdu(APDU apdu) {
-        if (patient.getLenDu() != 0) {
-            byte[] buffer = apdu.getBuffer();
-            apdu.setOutgoing();
-            apdu.setOutgoingLength((short) 65);
-            Util.arrayCopy(patient.getDiung(), (short) 0, buffer, (short) 0, patient.getLenDu());
-            apdu.sendBytes((short) 0, patient.getLenDu());
-        }
-    }
-
-    private void set_tsba(APDU apdu, short len) {
-        patient.setLenTs(len);
-        byte[] buffer = apdu.getBuffer();
-        apdu.setOutgoing();
-        apdu.setOutgoingLength((short) 65);
-        Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, patient.getTieusu(), (short) 0, len);
-        apdu.sendBytes((short) 0, len);
+    private void update_balance(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+		// Retrieve the new balance from the APDU buffer
+		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, patient.getBalance(), (short) 0, len);		
+		// Update the patient balance length
+		patient.setLenBalance(len);
     }
 
     private void set_chatdu(APDU apdu, short len) {
@@ -355,6 +342,17 @@ public class BenhNhan extends Applet implements ExtendedLength {
         apdu.sendBytes((short) 0, len);
     }
 
+
+    private void get_chatdu(APDU apdu) {
+        if (patient.getLenDu() != 0) {
+            byte[] buffer = apdu.getBuffer();
+            apdu.setOutgoing();
+            apdu.setOutgoingLength((short) 65);
+            Util.arrayCopy(patient.getDiung(), (short) 0, buffer, (short) 0, patient.getLenDu());
+            apdu.sendBytes((short) 0, patient.getLenDu());
+        }
+    }
+    
     private void init_bn(byte[] tempBuffer) {
         short tg1, tg2, tg3, tg4, tg5, tg6;
         tg1 = tg2 = tg3 = tg4 = tg5 = tg6 = 0;

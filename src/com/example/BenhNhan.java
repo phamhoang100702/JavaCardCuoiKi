@@ -103,34 +103,10 @@ public class BenhNhan extends Applet implements ExtendedLength {
 
         switch (buf[ISO7816.OFFSET_INS]) {
             case INS_INIT_BN:
-                // dataLen = apdu.getIncomingLength();
-                // if (dataLen > MAX_SIZE) {
-                    // ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
-                // }
-                // short dataOffset = apdu.getOffsetCdata();
-                // pointer = 0;
-                // while (len > 0) {
-                    // Util.arrayCopy(buf, dataOffset, tempBuffer, pointer, len);
-                    // pointer += len;
-                    // len = apdu.receiveBytes(dataOffset);
-                // }
-                // init_bn(tempBuffer);
                 receiveInfo(apdu, buf, len);
                 break;
 
-            case UPDATE_BN: // Handle UPDATE_BN instruction
-                // dataLen = apdu.getIncomingLength();
-                // if (dataLen > MAX_SIZE) {
-                    // ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
-                // }
-                // dataOffset = apdu.getOffsetCdata();
-                // pointer = 0;
-                // while (len > 0) {
-                    // Util.arrayCopy(buf, dataOffset, tempBuffer, pointer, len);
-                    // pointer += len;
-                    // len = apdu.receiveBytes(dataOffset);
-                // }
-                // update_bn(tempBuffer); // Call the new update_bn method
+            case UPDATE_BN:
                 receiveInfo(apdu, buf, len);
                 break;
 

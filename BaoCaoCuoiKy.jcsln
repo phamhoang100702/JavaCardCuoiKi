@@ -1,0 +1,11 @@
+<JavaCardSolution name="BaoCaoCuoiKy">
+    <JavaCardProjects>
+        <JavaCardProject path="BaoCaoCuoiKy.jcproj" />
+    </JavaCardProjects>
+    <Build>
+        <BuildDependon />
+    </Build>
+    <Platform>
+        <ChipPack Name="" />
+    </Platform>
+</JavaCardSolution>

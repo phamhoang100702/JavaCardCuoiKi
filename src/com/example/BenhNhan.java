@@ -32,7 +32,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte UPDATE_PIN = (byte) 0x21; // Update patient pin
     private static final byte INS_UPDATE_PIC = (byte) 0x22; //Update patient picture
     private static final byte INS_GET_PIC = (byte) 0x23; //Send patient picture
-
+    private static final byte INS_GET_PUBLIC_KEY = (byte) 0x24; //Update patient picture
+    private static final byte INS_GET_SIGN = (byte) 0x25; //Send patient picture
 	// AES key for encrypt and decrypt data
 	private AESKey aesKey;
 	private Cipher cipher;
@@ -80,6 +81,11 @@ public class BenhNhan extends Applet implements ExtendedLength {
     	rsaPrivKey = (RSAPrivateKey) keyPair.getPrivate();
     	rsaPubKey = (RSAPublicKey) keyPair.getPublic();
         
+        randomData.setSeed(new byte[]{ 'H', 'e', 'l', 'l', 'o', 'W', 'o', 'r', 'l', 'd' }, (short) 0, (short) 10);
+		byte[] keyData = new byte[aesKeyLen];
+		randomData.generateData(keyData, (short) 0, aesKeyLen);
+		aesKey.setKey(keyData, (short) 0);
+		
         // Initialize the patient instance
         patient = new Patient();
 
@@ -155,6 +161,12 @@ public class BenhNhan extends Applet implements ExtendedLength {
             case INS_GET_PIC:
                 sendPicture(apdu);
                 break;
+            case (byte) INS_GET_PUBLIC_KEY:
+				get_public_key(apdu, buf);
+				break;
+			case (byte) INS_GET_SIGN:
+				sign_data(apdu, buf, len);
+				break;
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
                 break;
@@ -297,7 +309,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
     }
     
-        private void receiveInfo(APDU apdu, byte[] buf, short recvLen) {
+    private void receiveInfo(APDU apdu, byte[] buf, short recvLen) {
     // Get the total length of incoming data
     dataLen = apdu.getIncomingLength();
     patient.setLenInfo(dataLen);
@@ -349,8 +361,9 @@ private void sendInfo(APDU apdu) {
         short pointer = 0;
 
         while (recvLen > 0) {
+        	byte[] encryptedData = encryptAes(buf);
             // Copy received data into the patient's picture attribute
-            Util.arrayCopy(buf, dataOffset, patient.getPicture(), pointer, recvLen);
+            Util.arrayCopy(encryptedData, dataOffset, patient.getPicture(), pointer, recvLen);
             pointer += recvLen;
 
             // Continue receiving the next chunk
@@ -360,8 +373,11 @@ private void sendInfo(APDU apdu) {
     }
 
     private void sendPicture(APDU apdu) {
-        short toSend = patient.getLenPicture();
-        byte[] picture = patient.getPicture();
+    	byte[] encryptedImage = patient.getPicture();
+    	byte[] decryptedPic = decryptAes(encryptedImage);
+        short toSend = (short) decryptedPic.length;
+        //short toSend = patient.getLenPicture();
+        //byte[] picture = patient.getPicture();
         short le = apdu.setOutgoing(); // Maximum length to send
         apdu.setOutgoingLength(toSend);
 
@@ -370,7 +386,7 @@ private void sendInfo(APDU apdu) {
 
         while (toSend > 0) {
             sendLen = (toSend > le) ? le : toSend;
-            apdu.sendBytesLong(picture, pointer, sendLen);
+            apdu.sendBytesLong(decryptedPic, pointer, sendLen);
             toSend -= sendLen;
             pointer += sendLen;
         }
@@ -391,9 +407,14 @@ private void sendInfo(APDU apdu) {
     }
     
     private byte[] encryptAes(byte[] dataToEncrypt) {
+    	short paddingLength = (short) (16 - (dataToEncrypt.length % 16));
+    	byte[] paddedData = new byte[(short) (dataToEncrypt.length + paddingLength)];
+    	Util.arrayCopy(dataToEncrypt, (short) 0, paddedData, (short) 0, (short) dataToEncrypt.length);
+    	for (byte i = 0; i < (byte) (paddingLength - 1); i++) paddedData[(short) (dataToEncrypt.length + 1)] = (byte) 0xFF;
+    	paddedData[(short) (paddedData.length - 1)] = (byte) paddingLength;
 	    cipher.init(aesKey, Cipher.MODE_ENCRYPT);
-	    byte[] encryptedData = new byte[(short) dataToEncrypt.length];
-	    cipher.doFinal(dataToEncrypt, (short) 0, (short) dataToEncrypt.length, encryptedData, (short) 0);
+	    byte[] encryptedData = new byte[(short) paddedData.length];
+	    cipher.doFinal(paddedData, (short) 0, (short) paddedData.length, encryptedData, (short) 0);
 	    return encryptedData;
     }
     
@@ -401,8 +422,26 @@ private void sendInfo(APDU apdu) {
 	    cipher.init(aesKey, Cipher.MODE_DECRYPT);
 	    byte[] decryptedData = new byte[(short) dataToDecrypt.length];
 	    cipher.doFinal(dataToDecrypt, (short) 0, (short) dataToDecrypt.length, decryptedData, (short) 0);
-	    return decryptedData;
+	    short paddingLength = (short) decryptedData[(short) (decryptedData.length - 1)];
+	    byte[] unpaddedData = new byte[(short) (decryptedData.length - paddingLength)];
+	    Util.arrayCopy(decryptedData, (short) 0, unpaddedData, (short) 0, (short) unpaddedData.length);
+	    return unpaddedData;
     }
+    
+    private void get_public_key(APDU apdu, byte[] buf) {
+	    short modLength = rsaPubKey.getModulus(buf, (short) 0);
+		short expLength = rsaPubKey.getExponent(buf, modLength);
+		apdu.setOutgoingAndSend((short) 0, (short) (modLength + expLength));
+    }
+    
+    private void sign_data(APDU apdu, byte[] buf, short dataLength) {
+	    byte[] dataToSign = new byte[dataLength];
+	    Util.arrayCopy(buf, ISO7816.OFFSET_CDATA, dataToSign, (short) 0, dataLength);
+	    byte[] signedData = signRsa(dataToSign);
+	    Util.arrayCopy(signedData, (short) 0, buf, (short) 0, (short) signedData.length);
+	    apdu.setOutgoingAndSend((short) 0, (short) signedData.length);
+    }
+    
     
     private byte[] signRsa(byte[] dataToSign) {
 	    rsaSig.init(rsaPrivKey, Signature.MODE_SIGN);

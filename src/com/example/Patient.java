@@ -5,7 +5,7 @@ public class Patient {
     private short len_pin, len_ts, len_du, len_balance, len_picture, len_info;
 
     public Patient() {
-    	info = new byte [1000];
+    	info = new byte [2000];
         pin = new byte[8];
         tieusu = new byte[80];
         diung = new byte[80];
@@ -15,7 +15,7 @@ public class Patient {
 
     // Getters and setters for each field
     public byte[] getInfo() { return info; }
-    public void setInfo(byte[] hoten) { this.info = info; }
+    public void setInfo(byte[] info) { this.info = info; }
     
     public byte[] getPin() { return pin; }
     public void setPin(byte[] pin) { this.pin = pin; }
@@ -47,6 +47,6 @@ public class Patient {
     public byte[] getPicture() { return picture; }
     public void setPicture(byte[] picture) { this.picture = picture; }
 
-    public short getLenPicture() { return this.len_picture; }
+    public short getLenPicture() { return len_picture; }
     public void setLenPicture(short len_picture) { this.len_picture = len_picture; }
 }

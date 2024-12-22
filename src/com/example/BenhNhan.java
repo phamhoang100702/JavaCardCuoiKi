@@ -85,7 +85,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
 		byte[] keyData = new byte[aesKeyLen];
 		randomData.generateData(keyData, (short) 0, aesKeyLen);
 		aesKey.setKey(keyData, (short) 0);
-		
+
         // Initialize the patient instance
         patient = new Patient();
 
@@ -108,10 +108,6 @@ public class BenhNhan extends Applet implements ExtendedLength {
         short pointer = 0;
 
         switch (buf[ISO7816.OFFSET_INS]) {
-            case INS_INIT_BN:
-                receiveInfo(apdu, buf, len);
-                break;
-
             case UPDATE_BN:
                 receiveInfo(apdu, buf, len);
                 break;
@@ -175,6 +171,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
 
     private void processCard(APDU apdu, short len) {
         byte[] buffer = apdu.getBuffer();
+        byte[] decryptedPin = decryptAes(patient.getPin());
         apdu.setOutgoing();
 
         // If the card is already blocked
@@ -185,7 +182,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
 
         // Check if the provided PIN length matches the stored PIN length
-        if (len != patient.getLenPin()) {
+        if (len != (short) decryptedPin.length) {
             counter++; // Decrease counter for incorrect PIN
             if (counter == 4) {
                 block_card = true; // Block the card
@@ -201,7 +198,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
 
         // Check the PIN
-        if (Util.arrayCompare(buffer, ISO7816.OFFSET_CDATA, patient.getPin(), (short) 0, len) == 0) {
+        if (Util.arrayCompare(buffer, ISO7816.OFFSET_CDATA, decryptedPin, (short) 0, len) == 0) {
             // Correct PIN
             counter = 0; // Reset counter
             apdu.setOutgoingLength((short) 1);
@@ -231,34 +228,42 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private void clear_card(APDU apdu) {
         patient.setLenInfo((short) 0);
         patient.setLenPin((short) 0);
+        patient.setLenBalance((short) 0);
         patient.setLenTs((short) 0);
         Util.arrayFillNonAtomic(patient.getInfo(), (short) 0, (short) 1000, (byte) 0);
         Util.arrayFillNonAtomic(patient.getPin(), (short) 0, (short) 8, (byte) 0);
+        Util.arrayFillNonAtomic(patient.getBalance(), (short) 0, (short) 20, (byte) 0);
         Util.arrayFillNonAtomic(patient.getDiung(), (short) 0, (short) 64, (byte) 0);
         Util.arrayFillNonAtomic(patient.getTieusu(), (short) 0, (short) 64, (byte) 0);
     }
 
     private void get_pin(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
-        short pinLength = patient.getLenPin(); // Get the actual PIN length
-        Util.arrayCopy(patient.getPin(), (short) 0, buffer, (short) 0, pinLength);
+        byte[] decryptedPin = decryptAes(patient.getPin());
+        short pinLength = (short) decryptedPin.length; // Get the actual PIN length
+        Util.arrayCopy(decryptedPin, (short) 0, buffer, (short) 0, pinLength);
         apdu.setOutgoingAndSend((short) 0, pinLength);
     }
 
     private void get_balance(APDU apdu) {
             byte[] buffer = apdu.getBuffer();
+            byte[] decryptedBalance = decryptAes(patient.getBalance());
             apdu.setOutgoing();
-            apdu.setOutgoingLength(patient.getLenBalance());
-            Util.arrayCopy(patient.getBalance(), (short) 0, buffer, (short) 0, patient.getLenBalance());
-            apdu.sendBytes((short) 0, patient.getLenBalance());     
+            apdu.setOutgoingLength((short) decryptedBalance.length);
+            Util.arrayCopy(decryptedBalance, (short) 0, buffer, (short) 0, (short)decryptedBalance.length);
+            apdu.sendBytes((short) 0, (short)decryptedBalance.length);     
     }
 
     private void update_balance(APDU apdu, short len) {
 		byte[] buffer = apdu.getBuffer();
 		// Retrieve the new balance from the APDU buffer
-		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, patient.getBalance(), (short) 0, len);		
+		byte[] rawBalance = new byte[len];
+		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawBalance, (short) 0, (short)len);		
+		byte[] encryptedBalance = encryptAes(rawBalance);
+		patient.setBalance(encryptedBalance);
+		patient.setLenBalance((short)encryptedBalance.length);
 		// Update the patient balance length
-		patient.setLenBalance(len);
+		
     }
 
     private void set_chatdu(APDU apdu, short len) {
@@ -282,113 +287,78 @@ public class BenhNhan extends Applet implements ExtendedLength {
     }
     
     private void update_pin(APDU apdu, short len) {
-        try {
-            // Check if the PIN length is greater than 8
-            if (len > 8) {
-                // Return an error status word for wrong length (6700)
-                ISOException.throwIt((short) 0x6700);
-            }
-
-            // Update PIN length in the patient object
-            patient.setLenPin(len);
-
-            // Retrieve the buffer from the APDU object
-            byte[] buffer = apdu.getBuffer();
-
-            // Copy the new PIN from the buffer to the patient's PIN field
-            Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, patient.getPin(), (short) 0, len);
-
-            // Set a success status word (9000)
-            ISOException.throwIt(ISO7816.SW_NO_ERROR);
-        } catch (ISOException e) {
-            // Handle ISOException and set appropriate status word
-            ISOException.throwIt(e.getReason());
-        } catch (Exception e) {
-            // Handle any other exceptions and set status word 6F00
-            ISOException.throwIt((short) 0x6F00);
-        }
+		byte[] buffer = apdu.getBuffer();
+		// Retrieve the new balance from the APDU buffer
+		byte[] rawPin = new byte[len];
+		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawPin, (short) 0, (short)len);		
+		byte[] encryptedPin = encryptAes(rawPin);
+		patient.setPin(encryptedPin);
+		patient.setLenPin((short)encryptedPin.length);
+		// Update the patient balance length
+		
     }
     
     private void receiveInfo(APDU apdu, byte[] buf, short recvLen) {
-    // Get the total length of incoming data
-    dataLen = apdu.getIncomingLength();
-    patient.setLenInfo(dataLen);
-    if (dataLen > patient.getInfo().length) {
-        ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		dataLen = apdu.getIncomingLength();
+		if (dataLen > MAX_SIZE) ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		short dataOffset = apdu.getOffsetCdata();
+		short pointer = 0;
+		byte[] rawInfo = new byte[dataLen];	
+		while (recvLen > 0) {
+			Util.arrayCopy(buf, dataOffset, rawInfo, pointer, recvLen);
+			pointer += recvLen;
+			recvLen = apdu.receiveBytes(dataOffset);
+		}
+		byte[] encryptedInfo = encryptAes(rawInfo);
+		patient.setInfo(encryptedInfo);
+		patient.setLenInfo((short) encryptedInfo.length);
     }
 
-    // Get the offset where data starts
-    short dataOffset = apdu.getOffsetCdata();
-    short pointer = 0;
-
-    while (recvLen > 0) {
-        // Copy received data into the patient's info attribute
-        Util.arrayCopy(buf, dataOffset, patient.getInfo(), pointer, recvLen);
-        pointer += recvLen;
-
-        // Continue receiving the next chunk
-        recvLen = apdu.receiveBytes(dataOffset);
+    private void sendInfo(APDU apdu) {
+        byte[] encryptedInfo = patient.getInfo();
+        byte[] rawInfo = decryptAes(encryptedInfo);
+        short toSend = (short) rawInfo.length;
+        short maxLenCanSend = apdu.setOutgoing();
+        apdu.setOutgoingLength(toSend);
+        short sendLen;
+        short pointer = 0;
+        while (toSend > 0) {
+	        sendLen = (toSend > maxLenCanSend) ? maxLenCanSend : toSend;
+	        apdu.sendBytesLong(rawInfo, pointer, sendLen);
+	        toSend -= sendLen;
+	        pointer += sendLen;
+        }
     }
-}
-
-private void sendInfo(APDU apdu) {
-    short toSend = patient.getLenInfo();
-    byte[] info = patient.getInfo();
-    short le = apdu.setOutgoing(); // Maximum length to send
-    apdu.setOutgoingLength(toSend);
-
-    short sendLen;
-    short pointer = 0;
-
-    while (toSend > 0) {
-        sendLen = (toSend > le) ? le : toSend;
-        apdu.sendBytesLong(info, pointer, sendLen);
-        toSend -= sendLen;
-        pointer += sendLen;
-    }
-}
 
     private void receivePicture(APDU apdu, byte[] buf, short recvLen) {
-        dataLen = apdu.getIncomingLength();
-        patient.setLenPicture(dataLen);
-        // Get the total length of incoming data
-        if (dataLen > patient.getPicture().length) {
-            ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
-        }
-
-        // Get the offset where data starts
-        short dataOffset = apdu.getOffsetCdata();
-        short pointer = 0;
-
-        while (recvLen > 0) {
-        	byte[] encryptedData = encryptAes(buf);
-            // Copy received data into the patient's picture attribute
-            Util.arrayCopy(encryptedData, dataOffset, patient.getPicture(), pointer, recvLen);
-            pointer += recvLen;
-
-            // Continue receiving the next chunk
-            recvLen = apdu.receiveBytes(dataOffset);
-        }
-
+		dataLen = apdu.getIncomingLength();
+		if (dataLen > MAX_SIZE) ISOException.throwIt(ISO7816.SW_WRONG_LENGTH);
+		short dataOffset = apdu.getOffsetCdata();
+		short pointer = 0;
+		byte[] rawImage = new byte[dataLen];	
+		while (recvLen > 0) {
+			Util.arrayCopy(buf, dataOffset, rawImage, pointer, recvLen);
+			pointer += recvLen;
+			recvLen = apdu.receiveBytes(dataOffset);
+		}
+		byte[] encryptedImage = encryptAes(rawImage);
+		patient.setPicture(encryptedImage);
+		patient.setLenPicture((short) encryptedImage.length);
     }
 
     private void sendPicture(APDU apdu) {
-    	byte[] encryptedImage = patient.getPicture();
-    	byte[] decryptedPic = decryptAes(encryptedImage);
-        short toSend = (short) decryptedPic.length;
-        //short toSend = patient.getLenPicture();
-        //byte[] picture = patient.getPicture();
-        short le = apdu.setOutgoing(); // Maximum length to send
+        byte[] encryptedImage = patient.getPicture();
+        byte[] rawImage = decryptAes(encryptedImage);
+        short toSend = (short) rawImage.length;
+        short maxLenCanSend = apdu.setOutgoing();
         apdu.setOutgoingLength(toSend);
-
         short sendLen;
         short pointer = 0;
-
         while (toSend > 0) {
-            sendLen = (toSend > le) ? le : toSend;
-            apdu.sendBytesLong(decryptedPic, pointer, sendLen);
-            toSend -= sendLen;
-            pointer += sendLen;
+	        sendLen = (toSend > maxLenCanSend) ? maxLenCanSend : toSend;
+	        apdu.sendBytesLong(rawImage, pointer, sendLen);
+	        toSend -= sendLen;
+	        pointer += sendLen;
         }
     }
     
@@ -409,7 +379,7 @@ private void sendInfo(APDU apdu) {
     private byte[] encryptAes(byte[] dataToEncrypt) {
     	short paddingLength = (short) (16 - (dataToEncrypt.length % 16));
     	byte[] paddedData = new byte[(short) (dataToEncrypt.length + paddingLength)];
-    	Util.arrayCopy(dataToEncrypt, (short) 0, paddedData, (short) 0, (short) dataToEncrypt.length);
+    	for (short u = 0; u < (short) dataToEncrypt.length; u++) paddedData[u] = dataToEncrypt[u];
     	for (byte i = 0; i < (byte) (paddingLength - 1); i++) paddedData[(short) (dataToEncrypt.length + 1)] = (byte) 0xFF;
     	paddedData[(short) (paddedData.length - 1)] = (byte) paddingLength;
 	    cipher.init(aesKey, Cipher.MODE_ENCRYPT);
@@ -424,10 +394,9 @@ private void sendInfo(APDU apdu) {
 	    cipher.doFinal(dataToDecrypt, (short) 0, (short) dataToDecrypt.length, decryptedData, (short) 0);
 	    short paddingLength = (short) decryptedData[(short) (decryptedData.length - 1)];
 	    byte[] unpaddedData = new byte[(short) (decryptedData.length - paddingLength)];
-	    Util.arrayCopy(decryptedData, (short) 0, unpaddedData, (short) 0, (short) unpaddedData.length);
+	    for (short u = 0; u < (short) unpaddedData.length; u++) unpaddedData[u] = decryptedData[u];
 	    return unpaddedData;
     }
-    
     private void get_public_key(APDU apdu, byte[] buf) {
 	    short modLength = rsaPubKey.getModulus(buf, (short) 0);
 		short expLength = rsaPubKey.getExponent(buf, modLength);

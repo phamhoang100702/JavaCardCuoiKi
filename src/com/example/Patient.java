@@ -1,16 +1,17 @@
 package com.example;
 
 public class Patient {
-    private byte[] pin, tieusu, diung, balance, picture, info;
-    private short len_pin, len_ts, len_du, len_balance, len_picture, len_info;
+    private byte[] pin, tieusu, diung, balance, picture, info, cardId;
+    private short len_pin, len_ts, len_du, len_balance, len_picture, len_info, len_cardId;
 
     public Patient() {
     	info = new byte [2000];
-        pin = new byte[8];
+        pin = new byte[20];
         tieusu = new byte[80];
         diung = new byte[80];
         balance = new byte[20];
         picture = new byte[32767];
+        cardId = new byte[20];
     }
 
     // Getters and setters for each field
@@ -25,6 +26,9 @@ public class Patient {
 
     public byte[] getDiung() { return diung; }
     public void setDiung(byte[] diung) { this.diung = diung; }
+
+	public byte[] getCardId() { return cardId; }
+	public void setCardId(byte[] cardId) { this.cardId = cardId; }
 
     public short getLenInfo() { return len_info; }
     public void setLenInfo(short len_info) { this.len_info = len_info; }
@@ -49,4 +53,7 @@ public class Patient {
 
     public short getLenPicture() { return len_picture; }
     public void setLenPicture(short len_picture) { this.len_picture = len_picture; }
+    
+    public short getLenCardId() { return len_cardId; }
+    public void setLenCardId(short len_cardId) { this.len_cardId = len_cardId; }
 }

@@ -34,6 +34,9 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte INS_GET_PIC = (byte) 0x23; //Send patient picture
     private static final byte INS_GET_PUBLIC_KEY = (byte) 0x24; //Update patient picture
     private static final byte INS_GET_SIGN = (byte) 0x25; //Send patient picture
+    private static final byte INS_UPDATE_CARDID = (byte) 0x26; //Update CardId
+    private static final byte INS_GET_CARDID = (byte) 0x27; //Get CardId
+    private static final byte LOCK_CARD = (byte) 0x28; //Lock the card
 	// AES key for encrypt and decrypt data
 	private AESKey aesKey;
 	private Cipher cipher;
@@ -151,18 +154,35 @@ public class BenhNhan extends Applet implements ExtendedLength {
             case UNBLOCK_CARD:
                 unblockcard(apdu);
                 break;
+                
+			case LOCK_CARD:
+				lockcard(apdu);
+				break;
+				
             case INS_UPDATE_PIC:
                 receivePicture(apdu, buf, len);
                 break;
+                
             case INS_GET_PIC:
                 sendPicture(apdu);
                 break;
+                
             case (byte) INS_GET_PUBLIC_KEY:
 				get_public_key(apdu, buf);
 				break;
+				
 			case (byte) INS_GET_SIGN:
 				sign_data(apdu, buf, len);
 				break;
+				
+			case (byte) INS_UPDATE_CARDID:
+				update_card_id(apdu, len);
+				break;
+				
+			case (byte) INS_GET_CARDID:
+				get_card_id(apdu);
+				break;
+				
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
                 break;
@@ -219,22 +239,27 @@ public class BenhNhan extends Applet implements ExtendedLength {
         }
     }
 
-
     private void unblockcard(APDU apdu) {
         counter = 0;
         block_card = false;
+    }
+    
+    private void lockcard(APDU apdu) {
+	    counter = 4;
+	    block_card = true;
     }
 
     private void clear_card(APDU apdu) {
         patient.setLenInfo((short) 0);
         patient.setLenPin((short) 0);
         patient.setLenBalance((short) 0);
-        patient.setLenTs((short) 0);
-        Util.arrayFillNonAtomic(patient.getInfo(), (short) 0, (short) 1000, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getPin(), (short) 0, (short) 8, (byte) 0);
+        patient.setLenCardId((short) 0);
+        patient.setLenPicture((short) 0);
+        Util.arrayFillNonAtomic(patient.getInfo(), (short) 0, (short) 2000, (byte) 0);
+        Util.arrayFillNonAtomic(patient.getPin(), (short) 0, (short) 20, (byte) 0);
         Util.arrayFillNonAtomic(patient.getBalance(), (short) 0, (short) 20, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getDiung(), (short) 0, (short) 64, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getTieusu(), (short) 0, (short) 64, (byte) 0);
+        Util.arrayFillNonAtomic(patient.getCardId(), (short) 0, (short) 20, (byte) 0);
+        Util.arrayFillNonAtomic(patient.getPicture(), (short) 0, (short) 32767, (byte) 0);
     }
 
     private void get_pin(APDU apdu) {
@@ -245,6 +270,14 @@ public class BenhNhan extends Applet implements ExtendedLength {
         apdu.setOutgoingAndSend((short) 0, pinLength);
     }
 
+	private void get_card_id(APDU apdu) {
+        byte[] buffer = apdu.getBuffer();
+        byte[] decryptedCardId = decryptAes(patient.getCardId());
+        short cardIdLength = (short) decryptedCardId.length; // Get the actual PIN length
+        Util.arrayCopy(decryptedCardId, (short) 0, buffer, (short) 0, cardIdLength);
+        apdu.setOutgoingAndSend((short) 0, cardIdLength);
+    }
+    
     private void get_balance(APDU apdu) {
             byte[] buffer = apdu.getBuffer();
             byte[] decryptedBalance = decryptAes(patient.getBalance());
@@ -252,6 +285,17 @@ public class BenhNhan extends Applet implements ExtendedLength {
             apdu.setOutgoingLength((short) decryptedBalance.length);
             Util.arrayCopy(decryptedBalance, (short) 0, buffer, (short) 0, (short)decryptedBalance.length);
             apdu.sendBytes((short) 0, (short)decryptedBalance.length);     
+    }
+    
+    private void update_card_id(APDU apdu, short len) {
+		byte[] buffer = apdu.getBuffer();
+		// Retrieve the new balance from the APDU buffer
+		byte[] rawCardId = new byte[len];
+		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawCardId, (short) 0, (short)len);		
+		byte[] encryptedCardId = encryptAes(rawCardId);
+		patient.setCardId(encryptedCardId);
+		patient.setLenCardId((short)encryptedCardId.length);
+		// Update the patient balance length
     }
 
     private void update_balance(APDU apdu, short len) {
@@ -397,10 +441,19 @@ public class BenhNhan extends Applet implements ExtendedLength {
 	    for (short u = 0; u < (short) unpaddedData.length; u++) unpaddedData[u] = decryptedData[u];
 	    return unpaddedData;
     }
-    private void get_public_key(APDU apdu, byte[] buf) {
+
+	private void get_public_key(APDU apdu, byte[] buf) {
 	    short modLength = rsaPubKey.getModulus(buf, (short) 0);
 		short expLength = rsaPubKey.getExponent(buf, modLength);
-		apdu.setOutgoingAndSend((short) 0, (short) (modLength + expLength));
+		byte[] modLengthBytes = new byte[2];
+		Util.setShort(modLengthBytes, (short) 0, modLength);
+		byte[] expLengthBytes = new byte[2];
+		Util.setShort(expLengthBytes, (short) 0, expLength);
+		buf[(short) (modLength + expLength)] = modLengthBytes[0];
+		buf[(short) (modLength + expLength + 1)] = modLengthBytes[1];
+		buf[(short) (modLength + expLength + 2)] = expLengthBytes[0];
+		buf[(short) (modLength + expLength + 3)] = expLengthBytes[1];
+		apdu.setOutgoingAndSend((short) 0, (short) (modLength + expLength + 4));
     }
     
     private void sign_data(APDU apdu, byte[] buf, short dataLength) {
@@ -410,7 +463,6 @@ public class BenhNhan extends Applet implements ExtendedLength {
 	    Util.arrayCopy(signedData, (short) 0, buf, (short) 0, (short) signedData.length);
 	    apdu.setOutgoingAndSend((short) 0, (short) signedData.length);
     }
-    
     
     private byte[] signRsa(byte[] dataToSign) {
 	    rsaSig.init(rsaPrivKey, Signature.MODE_SIGN);

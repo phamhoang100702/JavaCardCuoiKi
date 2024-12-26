@@ -94,11 +94,6 @@ public class BenhNhan extends Applet implements ExtendedLength {
 
         // Register the applet
         register();
-
-        // Create a transient buffer
-        tempBuffer = new byte[MAX_SIZE];
-        temp = new byte[MAX_SIZE];
-        // Request object deletion
         JCSystem.requestObjectDeletion();
     }
 

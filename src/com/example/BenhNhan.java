@@ -126,16 +126,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
                 get_balance(apdu);
                 break;
 
-            case INS_GETDU:
-                get_chatdu(apdu);
-                break;
-
             case INS_UPDATEBALANCE:
                 update_balance(apdu, len);
-                break;
-
-            case INS_SETCHATDU:
-                set_chatdu(apdu, len);
                 break;
 
             case CLEAR_CARD:
@@ -288,8 +280,16 @@ public class BenhNhan extends Applet implements ExtendedLength {
 		byte[] rawCardId = new byte[len];
 		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawCardId, (short) 0, (short)len);		
 		byte[] encryptedCardId = encryptAes(rawCardId);
-		patient.setCardId(encryptedCardId);
-		patient.setLenCardId((short)encryptedCardId.length);
+		JCSystem.beginTransaction();
+		try{
+			patient.setCardId(encryptedCardId);
+			patient.setLenCardId((short)encryptedCardId.length);
+			JCSystem.commitTransaction();
+		} catch (Exception e){
+			JCSystem.abortTransaction();
+			ISOException.throwIt(ISO7816.SW_UNKNOWN);
+		}
+
 		// Update the patient balance length
     }
 
@@ -299,30 +299,15 @@ public class BenhNhan extends Applet implements ExtendedLength {
 		byte[] rawBalance = new byte[len];
 		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawBalance, (short) 0, (short)len);		
 		byte[] encryptedBalance = encryptAes(rawBalance);
-		patient.setBalance(encryptedBalance);
-		patient.setLenBalance((short)encryptedBalance.length);
-		// Update the patient balance length
-		
-    }
-
-    private void set_chatdu(APDU apdu, short len) {
-        patient.setLenDu(len);
-        byte[] buffer = apdu.getBuffer();
-        apdu.setOutgoing();
-        apdu.setOutgoingLength((short) 65);
-        Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, patient.getDiung(), (short) 0, len);
-        apdu.sendBytes((short) 0, len);
-    }
-
-
-    private void get_chatdu(APDU apdu) {
-        if (patient.getLenDu() != 0) {
-            byte[] buffer = apdu.getBuffer();
-            apdu.setOutgoing();
-            apdu.setOutgoingLength((short) 65);
-            Util.arrayCopy(patient.getDiung(), (short) 0, buffer, (short) 0, patient.getLenDu());
-            apdu.sendBytes((short) 0, patient.getLenDu());
-        }
+		JCSystem.beginTransaction();
+		try{
+			patient.setBalance(encryptedBalance);
+			patient.setLenBalance((short)encryptedBalance.length);
+			JCSystem.commitTransaction();
+		} catch (Exception e){
+			JCSystem.abortTransaction();
+			ISOException.throwIt(ISO7816.SW_UNKNOWN);
+		}		
     }
     
     private void update_pin(APDU apdu, short len) {
@@ -331,9 +316,16 @@ public class BenhNhan extends Applet implements ExtendedLength {
 		byte[] rawPin = new byte[len];
 		Util.arrayCopy(buffer, ISO7816.OFFSET_CDATA, rawPin, (short) 0, (short)len);		
 		byte[] encryptedPin = encryptAes(rawPin);
-		patient.setPin(encryptedPin);
-		patient.setLenPin((short)encryptedPin.length);
-		// Update the patient balance length
+		JCSystem.beginTransaction();
+		try{
+			patient.setPin(encryptedPin);
+			patient.setLenPin((short)encryptedPin.length);
+			JCSystem.commitTransaction();
+		}
+		catch (Exception e) {
+			JCSystem.abortTransaction();
+			ISOException.throwIt(ISO7816.SW_UNKNOWN);
+		}
 		
     }
     
@@ -349,8 +341,16 @@ public class BenhNhan extends Applet implements ExtendedLength {
 			recvLen = apdu.receiveBytes(dataOffset);
 		}
 		byte[] encryptedInfo = encryptAes(rawInfo);
-		patient.setInfo(encryptedInfo);
-		patient.setLenInfo((short) encryptedInfo.length);
+		JCSystem.beginTransaction();
+		try{
+			patient.setInfo(encryptedInfo);
+			patient.setLenInfo((short) encryptedInfo.length);
+			JCSystem.commitTransaction();
+		} catch (Exception e){
+			JCSystem.abortTransaction();
+			ISOException.throwIt(ISO7816.SW_UNKNOWN);
+		}
+
     }
 
     private void sendInfo(APDU apdu) {
@@ -381,8 +381,20 @@ public class BenhNhan extends Applet implements ExtendedLength {
 			recvLen = apdu.receiveBytes(dataOffset);
 		}
 		byte[] encryptedImage = encryptAes(rawImage);
-		patient.setPicture(encryptedImage);
-		patient.setLenPicture((short) encryptedImage.length);
+    // Start a transaction
+    JCSystem.beginTransaction();
+		try {
+			// Update persistent patient data
+			patient.setPicture(encryptedImage);
+			patient.setLenPicture((short) encryptedImage.length);
+        
+			// Commit the transaction
+			JCSystem.commitTransaction();
+		} catch (Exception e) {
+			// Abort the transaction if an exception occurs
+			JCSystem.abortTransaction();
+			ISOException.throwIt(ISO7816.SW_UNKNOWN); // Throw a specific error if needed
+		}
     }
 
     private void sendPicture(APDU apdu) {

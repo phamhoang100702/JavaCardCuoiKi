@@ -1,5 +1,5 @@
 // converted by version  [v3.0.4]
-// on Thu Dec 26 21:07:00 ICT 2024
+// on Tue Dec 31 02:27:55 ICT 2024
 
 .package com/example {
 	.aid 0x11:0x22:0x33:0x44:0x55:0x0;
@@ -149,126 +149,132 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 		// 48
-		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
+		staticMethodRef BenhNhan/checkCardCreated(Ljavacard/framework/APDU;)V;
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
 		// 49
-		virtualMethodRef Patient/getPin()[B;
+		staticMethodRef 0.7.1(S)V;		// javacard/framework/ISOException.throwIt(S)V
 		// 50
-		staticMethodRef BenhNhan/decryptAes([B)[B;
+		virtualMethodRef Patient/getPin()[B;
 		// 51
-		virtualMethodRef 0.10.7()S;		// setOutgoing()S
+		staticMethodRef BenhNhan/decryptAes([B)[B;
 		// 52
-		staticFieldRef boolean BenhNhan/block_card;
+		virtualMethodRef 0.10.7()S;		// setOutgoing()S
 		// 53
-		staticFieldRef byte BenhNhan/counter;
+		staticFieldRef boolean BenhNhan/block_card;
 		// 54
-		virtualMethodRef 0.10.9(S)V;		// setOutgoingLength(S)V
+		staticFieldRef byte BenhNhan/counter;
 		// 55
-		virtualMethodRef 0.10.5([BSS)V;		// sendBytesLong([BSS)V
+		virtualMethodRef 0.10.9(S)V;		// setOutgoingLength(S)V
 		// 56
-		staticMethodRef 0.16.0([BS[BSS)B;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+		virtualMethodRef 0.10.5([BSS)V;		// sendBytesLong([BSS)V
 		// 57
-		staticFieldRef byte[] BenhNhan/abc;
+		staticMethodRef 0.16.0([BS[BSS)B;		// javacard/framework/Util.arrayCompare([BS[BSS)B
 		// 58
-		virtualMethodRef Patient/setLenInfo(S)V;
+		staticFieldRef byte[] BenhNhan/abc;
 		// 59
-		virtualMethodRef Patient/setLenPin(S)V;
+		staticFieldRef boolean BenhNhan/cardCreated;
 		// 60
-		virtualMethodRef Patient/setLenBalance(S)V;
+		virtualMethodRef Patient/setLenInfo(S)V;
 		// 61
-		virtualMethodRef Patient/setLenCardId(S)V;
+		virtualMethodRef Patient/setLenPin(S)V;
 		// 62
-		virtualMethodRef Patient/setLenPicture(S)V;
+		virtualMethodRef Patient/setLenBalance(S)V;
 		// 63
-		virtualMethodRef Patient/getInfo()[B;
+		virtualMethodRef Patient/setLenCardId(S)V;
 		// 64
-		staticMethodRef 0.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+		virtualMethodRef Patient/setLenPicture(S)V;
 		// 65
-		virtualMethodRef Patient/getBalance()[B;
+		virtualMethodRef Patient/getInfo()[B;
 		// 66
-		virtualMethodRef Patient/getCardId()[B;
+		staticMethodRef 0.16.3([BSSB)S;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 		// 67
-		virtualMethodRef Patient/getPicture()[B;
+		virtualMethodRef Patient/getBalance()[B;
 		// 68
-		staticMethodRef 0.16.1([BS[BSS)S;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+		virtualMethodRef Patient/getCardId()[B;
 		// 69
-		virtualMethodRef 0.10.8(SS)V;		// setOutgoingAndSend(SS)V
+		virtualMethodRef Patient/getPicture()[B;
 		// 70
-		virtualMethodRef 0.10.4(SS)V;		// sendBytes(SS)V
+		staticMethodRef 0.16.1([BS[BSS)S;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 		// 71
-		.classRef 4.2;		// java/lang/Exception
+		virtualMethodRef 0.10.8(SS)V;		// setOutgoingAndSend(SS)V
 		// 72
-		staticMethodRef BenhNhan/encryptAes([B)[B;
+		virtualMethodRef 0.10.4(SS)V;		// sendBytes(SS)V
 		// 73
-		staticMethodRef 0.8.1()V;		// javacard/framework/JCSystem.beginTransaction()V
+		.classRef 4.2;		// java/lang/Exception
 		// 74
-		virtualMethodRef Patient/setCardId([B)V;
+		staticMethodRef BenhNhan/encryptAes([B)[B;
 		// 75
-		staticMethodRef 0.8.2()V;		// javacard/framework/JCSystem.commitTransaction()V
+		staticMethodRef 0.8.1()V;		// javacard/framework/JCSystem.beginTransaction()V
 		// 76
-		staticMethodRef 0.8.0()V;		// javacard/framework/JCSystem.abortTransaction()V
+		virtualMethodRef Patient/setCardId([B)V;
 		// 77
-		virtualMethodRef Patient/setBalance([B)V;
+		staticMethodRef 0.8.2()V;		// javacard/framework/JCSystem.commitTransaction()V
 		// 78
-		virtualMethodRef Patient/setPin([B)V;
+		staticMethodRef 0.8.0()V;		// javacard/framework/JCSystem.abortTransaction()V
 		// 79
-		virtualMethodRef 0.10.15()S;		// getIncomingLength()S
+		virtualMethodRef Patient/setBalance([B)V;
 		// 80
-		staticFieldRef short BenhNhan/dataLen;
+		virtualMethodRef Patient/setPin([B)V;
 		// 81
-		staticFieldRef short BenhNhan/MAX_SIZE;
+		virtualMethodRef 0.10.15()S;		// getIncomingLength()S
 		// 82
-		virtualMethodRef 0.10.16()S;		// getOffsetCdata()S
+		staticFieldRef short BenhNhan/dataLen;
 		// 83
-		virtualMethodRef 0.10.3(S)S;		// receiveBytes(S)S
+		staticFieldRef short BenhNhan/MAX_SIZE;
 		// 84
-		virtualMethodRef Patient/setInfo([B)V;
+		virtualMethodRef 0.10.16()S;		// getOffsetCdata()S
 		// 85
-		virtualMethodRef Patient/setPicture([B)V;
+		virtualMethodRef 0.10.3(S)S;		// receiveBytes(S)S
 		// 86
+		virtualMethodRef Patient/setInfo([B)V;
+		// 87
+		virtualMethodRef Patient/setPicture([B)V;
+		// 88
 		virtualMethodRef 3.1.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
 			.descriptor	Ljavacard/security/Key;	2.0;
 
-		// 87
-		virtualMethodRef 3.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
-		// 88
-		staticMethodRef 0.16.6([BSS)S;		// javacard/framework/Util.setShort([BSS)S
 		// 89
-		staticMethodRef BenhNhan/signRsa([B)[B;
+		virtualMethodRef 3.1.1([BSS[BS)S;		// doFinal([BSS[BS)S
 		// 90
+		staticMethodRef 0.16.6([BSS)S;		// javacard/framework/Util.setShort([BSS)S
+		// 91
+		staticMethodRef BenhNhan/signRsa([B)[B;
+		// 92
 		virtualMethodRef 2.15.3(Ljavacard/security/Key;B)V;		// init(Ljavacard/security/Key;B)V
 			.descriptor	Ljavacard/security/Key;	2.0;
 
-		// 91
-		virtualMethodRef 2.15.5([BSS[BS)S;		// sign([BSS[BS)S
-		// 92
-		staticMethodRef 4.0.0()V;		// java/lang/Object.<init>()V
 		// 93
+		virtualMethodRef 2.15.5([BSS[BS)S;		// sign([BSS[BS)S
+		// 94
+		staticMethodRef 4.0.0()V;		// java/lang/Object.<init>()V
+		// 95
 		staticMethodRef 3.1.0(BZ)Ljavacardx/crypto/Cipher;;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 			.descriptor	Ljavacardx/crypto/Cipher;	3.1;
 
-		// 94
+		// 96
 		staticMethodRef 0.3.0()V;		// javacard/framework/Applet.<init>()V
-		// 95
+		// 97
 		staticMethodRef 2.14.0(B)Ljavacard/security/RandomData;;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
 			.descriptor	Ljavacard/security/RandomData;	2.14;
 
-		// 96
+		// 98
 		staticMethodRef BenhNhan/<init>()V;
-		// 97
+		// 99
 		staticMethodRef 2.15.0(BZ)Ljavacard/security/Signature;;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
 			.descriptor	Ljavacard/security/Signature;	2.15;
 
-		// 98
+		// 100
 		staticMethodRef 2.13.0(BSZ)Ljavacard/security/Key;;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
 			.descriptor	Ljavacard/security/Key;	2.0;
 
-		// 99
-		.classRef 2.16;		// javacard/security/KeyPair
-		// 100
-		staticMethodRef 2.16.0(BS)V;		// javacard/security/KeyPair.<init>(BS)V
 		// 101
-		virtualMethodRef 2.16.1()V;		// genKeyPair()V
+		.classRef 2.16;		// javacard/security/KeyPair
 		// 102
+		staticMethodRef 2.16.0(BS)V;		// javacard/security/KeyPair.<init>(BS)V
+		// 103
+		virtualMethodRef 2.16.1()V;		// genKeyPair()V
+		// 104
 		virtualMethodRef 2.16.2()Ljavacard/security/PrivateKey;;		// getPrivate()Ljavacard/security/PrivateKey;
 			.descriptor	Ljavacard/security/PrivateKey;	2.2;
 
@@ -288,6 +294,7 @@
 			private static short MAX_SIZE = 32767;		// S
 			private static short dataLen;		// S
 			private static byte counter;		// B
+			private static boolean cardCreated;		// Z
 			private static final byte INS_INIT_BN = 16;		// B
 			private static final byte UNBLOCK_CARD = 17;		// B
 			private static final byte INS_RQPIN = 18;		// B
@@ -307,6 +314,7 @@
 			private static final byte INS_UPDATE_CARDID = 38;		// B
 			private static final byte INS_GET_CARDID = 39;		// B
 			private static final byte LOCK_CARD = 40;		// B
+			private static final byte CHECK_CARD_CREATED = 41;		// B
 			private static boolean block_card;		// Z
 			private static byte[] abc = {58,0,1};		// [B
 			private static byte[] tempBuffer;		// [B
@@ -339,7 +347,7 @@
 
 				L0:	new 21;		// com/example/BenhNhan
 					dup;
-					invokespecial 96;		// com/example/BenhNhan.<init>()V
+					invokespecial 98;		// com/example/BenhNhan.<init>()V
 					pop;
 					return;
 		}
@@ -349,7 +357,7 @@
 			.locals 2;
 
 				L0:	aload_0;
-					invokespecial 94;		// javacard/framework/Applet.<init>()V
+					invokespecial 96;		// javacard/framework/Applet.<init>()V
 					aload_0;
 					bspush 16;
 					putfield_s 0;		// short com/example/BenhNhan.aesKeyLen
@@ -357,35 +365,35 @@
 					bspush 15;
 					sspush 128;
 					sconst_0;
-					invokestatic 98;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
+					invokestatic 100;		// javacard/security/KeyBuilder.buildKey(BSZ)Ljavacard/security/Key;
 					checkcast 0 18;		// T_CLASSORINTERFACE javacard/security/AESKey
 					checkcast 0 18;		// T_CLASSORINTERFACE javacard/security/AESKey
 					putfield_a 1;		// reference com/example/BenhNhan.aesKey
 					aload_0;
 					bspush 13;
 					sconst_0;
-					invokestatic 93;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
+					invokestatic 95;		// javacardx/crypto/Cipher.getInstance(BZ)Ljavacardx/crypto/Cipher;
 					putfield_a 2;		// reference com/example/BenhNhan.cipher
 					aload_0;
 					sconst_1;
-					invokestatic 95;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
+					invokestatic 97;		// javacard/security/RandomData.getInstance(B)Ljavacard/security/RandomData;
 					putfield_a 3;		// reference com/example/BenhNhan.randomData
 					aload_0;
 					bspush 11;
 					sconst_0;
-					invokestatic 97;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
+					invokestatic 99;		// javacard/security/Signature.getInstance(BZ)Ljavacard/security/Signature;
 					putfield_a 4;		// reference com/example/BenhNhan.rsaSig
-					new 99;		// javacard/security/KeyPair
+					new 101;		// javacard/security/KeyPair
 					dup;
 					sconst_1;
 					sspush 1024;
-					invokespecial 100;		// javacard/security/KeyPair.<init>(BS)V
+					invokespecial 102;		// javacard/security/KeyPair.<init>(BS)V
 					astore_1;
 				L1:	aload_1;
-					invokevirtual 101;		// genKeyPair()V
+					invokevirtual 103;		// genKeyPair()V
 					aload_0;
 					aload_1;
-					invokevirtual 102;		// getPrivate()Ljavacard/security/PrivateKey;
+					invokevirtual 104;		// getPrivate()Ljavacard/security/PrivateKey;
 					checkcast 0 17;		// T_CLASSORINTERFACE javacard/security/RSAPrivateKey
 					putfield_a 5;		// reference com/example/BenhNhan.rsaPrivKey
 					aload_0;
@@ -482,13 +490,13 @@
 				L5:	aload_2;
 					sconst_1;
 					baload;
-					stableswitch L22 17 40 L14 L8 L9 L10 L22 L11 L22 L12 L13 L22 L22 L22 L22 L22 L22 L6 L7 L16 L17 L18 L19 L20 L21 L15;
+					stableswitch L23 17 41 L14 L8 L9 L10 L23 L11 L23 L12 L13 L23 L23 L23 L23 L23 L23 L6 L7 L16 L17 L18 L19 L20 L21 L15 L22;
 				L6:	aload_0;
 					aload_1;
 					aload_2;
 					sload_3;
 					invokespecial 32;		// com/example/BenhNhan.receiveInfo(Ljavacard/framework/APDU;[BS)V
-					goto L23;
+					goto L24;
 				L7:	aload_0;
 					aload_1;
 					sload_3;
@@ -496,70 +504,73 @@
 				L8:	aload_0;
 					aload_1;
 					invokespecial 34;		// com/example/BenhNhan.get_pin(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L9:	aload_0;
 					aload_1;
 					invokespecial 35;		// com/example/BenhNhan.sendInfo(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L10:	aload_0;
 					aload_1;
 					invokespecial 36;		// com/example/BenhNhan.get_balance(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L11:	aload_0;
 					aload_1;
 					sload_3;
 					invokespecial 37;		// com/example/BenhNhan.update_balance(Ljavacard/framework/APDU;S)V
-					goto L23;
+					goto L24;
 				L12:	aload_0;
 					aload_1;
 					invokespecial 38;		// com/example/BenhNhan.clear_card(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L13:	aload_0;
 					aload_1;
 					sload_3;
 					invokespecial 39;		// com/example/BenhNhan.processCard(Ljavacard/framework/APDU;S)V
-					goto L23;
+					goto L24;
 				L14:	aload_0;
 					aload_1;
 					invokespecial 40;		// com/example/BenhNhan.unblockcard(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L15:	aload_0;
 					aload_1;
 					invokespecial 41;		// com/example/BenhNhan.lockcard(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L16:	aload_0;
 					aload_1;
 					aload_2;
 					sload_3;
 					invokespecial 42;		// com/example/BenhNhan.receivePicture(Ljavacard/framework/APDU;[BS)V
-					goto L23;
+					goto L24;
 				L17:	aload_0;
 					aload_1;
 					invokespecial 43;		// com/example/BenhNhan.sendPicture(Ljavacard/framework/APDU;)V
-					goto L23;
+					goto L24;
 				L18:	aload_0;
 					aload_1;
 					aload_2;
 					invokespecial 44;		// com/example/BenhNhan.get_public_key(Ljavacard/framework/APDU;[B)V
-					goto L23;
+					goto L24;
 				L19:	aload_0;
 					aload_1;
 					aload_2;
 					sload_3;
 					invokespecial 45;		// com/example/BenhNhan.sign_data(Ljavacard/framework/APDU;[BS)V
-					goto L23;
+					goto L24;
 				L20:	aload_0;
 					aload_1;
 					sload_3;
 					invokespecial 46;		// com/example/BenhNhan.update_card_id(Ljavacard/framework/APDU;S)V
-					goto L23;
+					goto L24;
 				L21:	aload_0;
 					aload_1;
 					invokespecial 47;		// com/example/BenhNhan.get_card_id(Ljavacard/framework/APDU;)V
-					goto L23;
-				L22:	sspush 27904;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
-				L23:	return;
+					goto L24;
+				L22:	aload_0;
+					aload_1;
+					invokespecial 48;		// com/example/BenhNhan.checkCardCreated(Ljavacard/framework/APDU;)V
+				L23:	sspush 27904;
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
+				L24:	return;
 		}
 
 		.method private processCard(Ljavacard/framework/APDU;S)V {
@@ -573,96 +584,96 @@
 					astore_3;
 				L1:	aload_0;
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 49;		// getPin()[B
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokevirtual 50;		// getPin()[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore 4;
 				L2:	aload_1;
-					invokevirtual 51;		// setOutgoing()S
+					invokevirtual 52;		// setOutgoing()S
 					pop;
-					getstatic_b 52;		// boolean com/example/BenhNhan.block_card
+					getstatic_b 53;		// boolean com/example/BenhNhan.block_card
 					ifeq L4;
 				L3:	sspush 27011;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 					return;
 				L4:	sload_2;
 					aload 4;
 					arraylength;
 					if_scmpeq L10;
-				L5:	getstatic_b 53;		// byte com/example/BenhNhan.counter
+				L5:	getstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_1;
 					sadd;
 					s2b;
-					putstatic_b 53;		// byte com/example/BenhNhan.counter
-					getstatic_b 53;		// byte com/example/BenhNhan.counter
+					putstatic_b 54;		// byte com/example/BenhNhan.counter
+					getstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_4;
 					if_scmpne L7;
 				L6:	sconst_1;
-					putstatic_b 52;		// boolean com/example/BenhNhan.block_card
+					putstatic_b 53;		// boolean com/example/BenhNhan.block_card
 					sspush 27011;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 					goto L9;
 				L7:	aload_1;
 					sconst_1;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					sconst_1;
 					newarray 11;
 					astore 5;
 				L8:	aload 5;
 					sconst_0;
-					getstatic_b 53;		// byte com/example/BenhNhan.counter
+					getstatic_b 54;		// byte com/example/BenhNhan.counter
 					bastore;
 					aload_1;
 					aload 5;
 					sconst_0;
 					sconst_1;
-					invokevirtual 55;		// sendBytesLong([BSS)V
+					invokevirtual 56;		// sendBytesLong([BSS)V
 				L9:	return;
 				L10:	aload_3;
 					sconst_5;
 					aload 4;
 					sconst_0;
 					sload_2;
-					invokestatic 56;		// javacard/framework/Util.arrayCompare([BS[BSS)B
+					invokestatic 57;		// javacard/framework/Util.arrayCompare([BS[BSS)B
 					ifne L12;
 				L11:	sconst_0;
-					putstatic_b 53;		// byte com/example/BenhNhan.counter
+					putstatic_b 54;		// byte com/example/BenhNhan.counter
 					aload_1;
 					sconst_1;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					aload_1;
-					getstatic_a 57;		// reference com/example/BenhNhan.abc
+					getstatic_a 58;		// reference com/example/BenhNhan.abc
 					sconst_1;
 					sconst_1;
-					invokevirtual 55;		// sendBytesLong([BSS)V
+					invokevirtual 56;		// sendBytesLong([BSS)V
 					goto L16;
-				L12:	getstatic_b 53;		// byte com/example/BenhNhan.counter
+				L12:	getstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_1;
 					sadd;
 					s2b;
-					putstatic_b 53;		// byte com/example/BenhNhan.counter
-					getstatic_b 53;		// byte com/example/BenhNhan.counter
+					putstatic_b 54;		// byte com/example/BenhNhan.counter
+					getstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_4;
 					if_scmpne L14;
 				L13:	sconst_1;
-					putstatic_b 52;		// boolean com/example/BenhNhan.block_card
+					putstatic_b 53;		// boolean com/example/BenhNhan.block_card
 					sspush 27011;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 					goto L16;
 				L14:	aload_1;
 					sconst_1;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					sconst_1;
 					newarray 11;
 					astore 5;
 				L15:	aload 5;
 					sconst_0;
-					getstatic_b 53;		// byte com/example/BenhNhan.counter
+					getstatic_b 54;		// byte com/example/BenhNhan.counter
 					bastore;
 					aload_1;
 					aload 5;
 					sconst_0;
 					sconst_1;
-					invokevirtual 55;		// sendBytesLong([BSS)V
+					invokevirtual 56;		// sendBytesLong([BSS)V
 				L16:	return;
 		}
 
@@ -673,9 +684,9 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	sconst_0;
-					putstatic_b 53;		// byte com/example/BenhNhan.counter
+					putstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_0;
-					putstatic_b 52;		// boolean com/example/BenhNhan.block_card
+					putstatic_b 53;		// boolean com/example/BenhNhan.block_card
 					return;
 		}
 
@@ -686,68 +697,110 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	sconst_4;
-					putstatic_b 53;		// byte com/example/BenhNhan.counter
+					putstatic_b 54;		// byte com/example/BenhNhan.counter
 					sconst_1;
-					putstatic_b 52;		// boolean com/example/BenhNhan.block_card
+					putstatic_b 53;		// boolean com/example/BenhNhan.block_card
+					return;
+		}
+
+		.method private checkCardCreated(Ljavacard/framework/APDU;)V {
+			.stack 1;
+			.locals 0;
+
+			.descriptor	Ljavacard/framework/APDU;	0.10;
+
+				L0:	getstatic_b 59;		// boolean com/example/BenhNhan.cardCreated
+					ifne L2;
+				L1:	sspush 27272;
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
+				L2:	sspush -28672;
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 					return;
 		}
 
 		.method private clear_card(Ljavacard/framework/APDU;)V {
 			.stack 4;
-			.locals 0;
+			.locals 5;
 
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					sconst_0;
-					invokevirtual 58;		// setLenInfo(S)V
+					invokevirtual 60;		// setLenInfo(S)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					sconst_0;
-					invokevirtual 59;		// setLenPin(S)V
+					invokevirtual 61;		// setLenPin(S)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					sconst_0;
-					invokevirtual 60;		// setLenBalance(S)V
+					invokevirtual 62;		// setLenBalance(S)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					sconst_0;
-					invokevirtual 61;		// setLenCardId(S)V
+					invokevirtual 63;		// setLenCardId(S)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					sconst_0;
-					invokevirtual 62;		// setLenPicture(S)V
+					invokevirtual 64;		// setLenPicture(S)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 63;		// getInfo()[B
+					invokevirtual 65;		// getInfo()[B
+					astore_2;
+				L1:	aload_2;
+					ifnull L3;
+				L2:	aload_2;
 					sconst_0;
-					sspush 2000;
+					aload_2;
+					arraylength;
 					sconst_0;
-					invokestatic 64;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 66;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
-					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 49;		// getPin()[B
+				L3:	getstatic_a 26;		// reference com/example/BenhNhan.patient
+					invokevirtual 50;		// getPin()[B
+					astore_3;
+				L4:	aload_3;
+					ifnull L6;
+				L5:	aload_3;
 					sconst_0;
-					bspush 20;
+					aload_3;
+					arraylength;
 					sconst_0;
-					invokestatic 64;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 66;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
-					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getBalance()[B
+				L6:	getstatic_a 26;		// reference com/example/BenhNhan.patient
+					invokevirtual 67;		// getBalance()[B
+					astore 4;
+				L7:	aload 4;
+					ifnull L9;
+				L8:	aload 4;
 					sconst_0;
-					bspush 20;
+					aload 4;
+					arraylength;
 					sconst_0;
-					invokestatic 64;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 66;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
-					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 66;		// getCardId()[B
+				L9:	getstatic_a 26;		// reference com/example/BenhNhan.patient
+					invokevirtual 68;		// getCardId()[B
+					astore 5;
+				L10:	aload 5;
+					ifnull L12;
+				L11:	aload 5;
 					sconst_0;
-					bspush 20;
+					aload 5;
+					arraylength;
 					sconst_0;
-					invokestatic 64;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 66;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
-					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 67;		// getPicture()[B
+				L12:	getstatic_a 26;		// reference com/example/BenhNhan.patient
+					invokevirtual 69;		// getPicture()[B
+					astore 6;
+				L13:	aload 6;
+					ifnull L15;
+				L14:	aload 6;
 					sconst_0;
-					sspush 32767;
+					aload 6;
+					arraylength;
 					sconst_0;
-					invokestatic 64;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
+					invokestatic 66;		// javacard/framework/Util.arrayFillNonAtomic([BSSB)S
 					pop;
+				L15:	sconst_0;
+					putstatic_b 59;		// boolean com/example/BenhNhan.cardCreated
 					return;
 		}
 
@@ -762,8 +815,8 @@
 					astore_2;
 				L1:	aload_0;
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 49;		// getPin()[B
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokevirtual 50;		// getPin()[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore_3;
 				L2:	aload_3;
 					arraylength;
@@ -773,12 +826,12 @@
 					aload_2;
 					sconst_0;
 					sload 4;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
 					sload 4;
-					invokevirtual 69;		// setOutgoingAndSend(SS)V
+					invokevirtual 71;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
@@ -793,8 +846,8 @@
 					astore_2;
 				L1:	aload_0;
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 66;		// getCardId()[B
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokevirtual 68;		// getCardId()[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore_3;
 				L2:	aload_3;
 					arraylength;
@@ -804,12 +857,12 @@
 					aload_2;
 					sconst_0;
 					sload 4;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
 					sload 4;
-					invokevirtual 69;		// setOutgoingAndSend(SS)V
+					invokevirtual 71;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
@@ -824,29 +877,29 @@
 					astore_2;
 				L1:	aload_0;
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 65;		// getBalance()[B
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokevirtual 67;		// getBalance()[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore_3;
 				L2:	aload_1;
-					invokevirtual 51;		// setOutgoing()S
+					invokevirtual 52;		// setOutgoing()S
 					pop;
 					aload_1;
 					aload_3;
 					arraylength;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					aload_3;
 					sconst_0;
 					aload_2;
 					sconst_0;
 					aload_3;
 					arraylength;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
 					aload_3;
 					arraylength;
-					invokevirtual 70;		// sendBytes(SS)V
+					invokevirtual 72;		// sendBytes(SS)V
 					return;
 		}
 
@@ -867,30 +920,32 @@
 					aload 4;
 					sconst_0;
 					sload_2;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_0;
 					aload 4;
-					invokespecial 72;		// com/example/BenhNhan.encryptAes([B)[B
+					invokespecial 74;		// com/example/BenhNhan.encryptAes([B)[B
 					astore 5;
-				L3:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L3:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L4:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
-					invokevirtual 74;		// setCardId([B)V
+					invokevirtual 76;		// setCardId([B)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
 					arraylength;
-					invokevirtual 61;		// setLenCardId(S)V
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokevirtual 63;		// setLenCardId(S)V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L5:	goto L8;
 				L6:	astore 6;
-				L7:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L7:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 28416;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
-				L8:	return;
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
+				L8:	sconst_1;
+					putstatic_b 59;		// boolean com/example/BenhNhan.cardCreated
+					return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L4 L5 L6 71;
+				L4 L5 L6 73;
 			}
 		}
 
@@ -911,30 +966,30 @@
 					aload 4;
 					sconst_0;
 					sload_2;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_0;
 					aload 4;
-					invokespecial 72;		// com/example/BenhNhan.encryptAes([B)[B
+					invokespecial 74;		// com/example/BenhNhan.encryptAes([B)[B
 					astore 5;
-				L3:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L3:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L4:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
-					invokevirtual 77;		// setBalance([B)V
+					invokevirtual 79;		// setBalance([B)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
 					arraylength;
-					invokevirtual 60;		// setLenBalance(S)V
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokevirtual 62;		// setLenBalance(S)V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L5:	goto L8;
 				L6:	astore 6;
-				L7:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L7:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 28416;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L8:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L4 L5 L6 71;
+				L4 L5 L6 73;
 			}
 		}
 
@@ -955,30 +1010,30 @@
 					aload 4;
 					sconst_0;
 					sload_2;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_0;
 					aload 4;
-					invokespecial 72;		// com/example/BenhNhan.encryptAes([B)[B
+					invokespecial 74;		// com/example/BenhNhan.encryptAes([B)[B
 					astore 5;
-				L3:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L3:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L4:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
-					invokevirtual 78;		// setPin([B)V
+					invokevirtual 80;		// setPin([B)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 5;
 					arraylength;
-					invokevirtual 59;		// setLenPin(S)V
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokevirtual 61;		// setLenPin(S)V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L5:	goto L8;
 				L6:	astore 6;
-				L7:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L7:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 28416;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L8:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L4 L5 L6 71;
+				L4 L5 L6 73;
 			}
 		}
 
@@ -989,19 +1044,19 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	aload_1;
-					invokevirtual 79;		// getIncomingLength()S
-					putstatic_s 80;		// short com/example/BenhNhan.dataLen
-					getstatic_s 80;		// short com/example/BenhNhan.dataLen
-					getstatic_s 81;		// short com/example/BenhNhan.MAX_SIZE
+					invokevirtual 81;		// getIncomingLength()S
+					putstatic_s 82;		// short com/example/BenhNhan.dataLen
+					getstatic_s 82;		// short com/example/BenhNhan.dataLen
+					getstatic_s 83;		// short com/example/BenhNhan.MAX_SIZE
 					if_scmple L2;
 				L1:	sspush 26368;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L2:	aload_1;
-					invokevirtual 82;		// getOffsetCdata()S
+					invokevirtual 84;		// getOffsetCdata()S
 					sstore 4;
 				L3:	sconst_0;
 					sstore 5;
-				L4:	getstatic_s 80;		// short com/example/BenhNhan.dataLen
+				L4:	getstatic_s 82;		// short com/example/BenhNhan.dataLen
 					newarray 11;
 					astore 6;
 				L5:	sload_3;
@@ -1011,7 +1066,7 @@
 					aload 6;
 					sload 5;
 					sload_3;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					sload 5;
 					sload_3;
@@ -1019,31 +1074,31 @@
 					sstore 5;
 					aload_1;
 					sload 4;
-					invokevirtual 83;		// receiveBytes(S)S
+					invokevirtual 85;		// receiveBytes(S)S
 					sstore_3;
 					goto L5;
 				L7:	aload_0;
 					aload 6;
-					invokespecial 72;		// com/example/BenhNhan.encryptAes([B)[B
+					invokespecial 74;		// com/example/BenhNhan.encryptAes([B)[B
 					astore 7;
-				L8:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L8:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L9:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 7;
-					invokevirtual 84;		// setInfo([B)V
+					invokevirtual 86;		// setInfo([B)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 7;
 					arraylength;
-					invokevirtual 58;		// setLenInfo(S)V
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokevirtual 60;		// setLenInfo(S)V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L10:	goto L13;
 				L11:	astore 8;
-				L12:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L12:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 28416;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L13:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L9 L10 L11 71;
+				L9 L10 L11 73;
 			}
 		}
 
@@ -1054,21 +1109,21 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 63;		// getInfo()[B
+					invokevirtual 65;		// getInfo()[B
 					astore_2;
 				L1:	aload_0;
 					aload_2;
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore_3;
 				L2:	aload_3;
 					arraylength;
 					sstore 4;
 				L3:	aload_1;
-					invokevirtual 51;		// setOutgoing()S
+					invokevirtual 52;		// setOutgoing()S
 					sstore 5;
 				L4:	aload_1;
 					sload 4;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					sconst_0;
 					sstore 7;
 				L5:	sload 4;
@@ -1084,7 +1139,7 @@
 					aload_3;
 					sload 7;
 					sload 6;
-					invokevirtual 55;		// sendBytesLong([BSS)V
+					invokevirtual 56;		// sendBytesLong([BSS)V
 					sload 4;
 					sload 6;
 					ssub;
@@ -1104,19 +1159,19 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	aload_1;
-					invokevirtual 79;		// getIncomingLength()S
-					putstatic_s 80;		// short com/example/BenhNhan.dataLen
-					getstatic_s 80;		// short com/example/BenhNhan.dataLen
-					getstatic_s 81;		// short com/example/BenhNhan.MAX_SIZE
+					invokevirtual 81;		// getIncomingLength()S
+					putstatic_s 82;		// short com/example/BenhNhan.dataLen
+					getstatic_s 82;		// short com/example/BenhNhan.dataLen
+					getstatic_s 83;		// short com/example/BenhNhan.MAX_SIZE
 					if_scmple L2;
 				L1:	sspush 26368;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L2:	aload_1;
-					invokevirtual 82;		// getOffsetCdata()S
+					invokevirtual 84;		// getOffsetCdata()S
 					sstore 4;
 				L3:	sconst_0;
 					sstore 5;
-				L4:	getstatic_s 80;		// short com/example/BenhNhan.dataLen
+				L4:	getstatic_s 82;		// short com/example/BenhNhan.dataLen
 					newarray 11;
 					astore 6;
 				L5:	sload_3;
@@ -1126,7 +1181,7 @@
 					aload 6;
 					sload 5;
 					sload_3;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					sload 5;
 					sload_3;
@@ -1134,31 +1189,31 @@
 					sstore 5;
 					aload_1;
 					sload 4;
-					invokevirtual 83;		// receiveBytes(S)S
+					invokevirtual 85;		// receiveBytes(S)S
 					sstore_3;
 					goto L5;
 				L7:	aload_0;
 					aload 6;
-					invokespecial 72;		// com/example/BenhNhan.encryptAes([B)[B
+					invokespecial 74;		// com/example/BenhNhan.encryptAes([B)[B
 					astore 7;
-				L8:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L8:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L9:	getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 7;
-					invokevirtual 85;		// setPicture([B)V
+					invokevirtual 87;		// setPicture([B)V
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
 					aload 7;
 					arraylength;
-					invokevirtual 62;		// setLenPicture(S)V
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokevirtual 64;		// setLenPicture(S)V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L10:	goto L13;
 				L11:	astore 8;
-				L12:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L12:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 28416;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L13:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L9 L10 L11 71;
+				L9 L10 L11 73;
 			}
 		}
 
@@ -1169,21 +1224,21 @@
 			.descriptor	Ljavacard/framework/APDU;	0.10;
 
 				L0:	getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 67;		// getPicture()[B
+					invokevirtual 69;		// getPicture()[B
 					astore_2;
 				L1:	aload_0;
 					aload_2;
-					invokespecial 50;		// com/example/BenhNhan.decryptAes([B)[B
+					invokespecial 51;		// com/example/BenhNhan.decryptAes([B)[B
 					astore_3;
 				L2:	aload_3;
 					arraylength;
 					sstore 4;
 				L3:	aload_1;
-					invokevirtual 51;		// setOutgoing()S
+					invokevirtual 52;		// setOutgoing()S
 					sstore 5;
 				L4:	aload_1;
 					sload 4;
-					invokevirtual 54;		// setOutgoingLength(S)V
+					invokevirtual 55;		// setOutgoingLength(S)V
 					sconst_0;
 					sstore 7;
 				L5:	sload 4;
@@ -1199,7 +1254,7 @@
 					aload_3;
 					sload 7;
 					sload 6;
-					invokevirtual 55;		// sendBytesLong([BSS)V
+					invokevirtual 56;		// sendBytesLong([BSS)V
 					sload 4;
 					sload 6;
 					ssub;
@@ -1216,13 +1271,13 @@
 			.stack 4;
 			.locals 1;
 
-				L0:	invokestatic 73;		// javacard/framework/JCSystem.beginTransaction()V
+				L0:	invokestatic 75;		// javacard/framework/JCSystem.beginTransaction()V
 				L1:	getfield_a_this 3;		// reference com/example/BenhNhan.randomData
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 49;		// getPin()[B
+					invokevirtual 50;		// getPin()[B
 					sconst_0;
 					getstatic_a 26;		// reference com/example/BenhNhan.patient
-					invokevirtual 49;		// getPin()[B
+					invokevirtual 50;		// getPin()[B
 					arraylength;
 					invokevirtual 22;		// setSeed([BSS)V
 					getfield_s_this 0;		// short com/example/BenhNhan.aesKeyLen
@@ -1237,16 +1292,16 @@
 					aload_1;
 					sconst_0;
 					invokeinterface 3 18 4;		// javacard/security/AESKey
-					invokestatic 75;		// javacard/framework/JCSystem.commitTransaction()V
+					invokestatic 77;		// javacard/framework/JCSystem.commitTransaction()V
 				L3:	goto L6;
 				L4:	astore_1;
-				L5:	invokestatic 76;		// javacard/framework/JCSystem.abortTransaction()V
+				L5:	invokestatic 78;		// javacard/framework/JCSystem.abortTransaction()V
 					sspush 27012;
-					invokestatic 48;		// javacard/framework/ISOException.throwIt(S)V
+					invokestatic 49;		// javacard/framework/ISOException.throwIt(S)V
 				L6:	return;
 			.exceptionTable {
 				// start_block end_block handler_block catch_type_index
-				L1 L3 L4 71;
+				L1 L3 L4 73;
 			}
 		}
 
@@ -1313,7 +1368,7 @@
 					getfield_a_this 2;		// reference com/example/BenhNhan.cipher
 					getfield_a_this 1;		// reference com/example/BenhNhan.aesKey
 					sconst_2;
-					invokevirtual 86;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 88;		// init(Ljavacard/security/Key;B)V
 					aload_3;
 					arraylength;
 					newarray 11;
@@ -1325,7 +1380,7 @@
 					arraylength;
 					aload 4;
 					sconst_0;
-					invokevirtual 87;		// doFinal([BSS[BS)S
+					invokevirtual 89;		// doFinal([BSS[BS)S
 					pop;
 					aload 4;
 					areturn;
@@ -1338,7 +1393,7 @@
 				L0:	getfield_a_this 2;		// reference com/example/BenhNhan.cipher
 					getfield_a_this 1;		// reference com/example/BenhNhan.aesKey
 					sconst_1;
-					invokevirtual 86;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 88;		// init(Ljavacard/security/Key;B)V
 					aload_1;
 					arraylength;
 					newarray 11;
@@ -1350,7 +1405,7 @@
 					arraylength;
 					aload_2;
 					sconst_0;
-					invokevirtual 87;		// doFinal([BSS[BS)S
+					invokevirtual 89;		// doFinal([BSS[BS)S
 					pop;
 					aload_2;
 					aload_2;
@@ -1405,7 +1460,7 @@
 				L3:	aload 5;
 					sconst_0;
 					sload_3;
-					invokestatic 88;		// javacard/framework/Util.setShort([BSS)S
+					invokestatic 90;		// javacard/framework/Util.setShort([BSS)S
 					pop;
 					sconst_2;
 					newarray 11;
@@ -1413,7 +1468,7 @@
 				L4:	aload 6;
 					sconst_0;
 					sload 4;
-					invokestatic 88;		// javacard/framework/Util.setShort([BSS)S
+					invokestatic 90;		// javacard/framework/Util.setShort([BSS)S
 					pop;
 					aload_2;
 					sload_3;
@@ -1460,7 +1515,7 @@
 					sadd;
 					sconst_4;
 					sadd;
-					invokevirtual 69;		// setOutgoingAndSend(SS)V
+					invokevirtual 71;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
@@ -1478,11 +1533,11 @@
 					aload 4;
 					sconst_0;
 					sload_3;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_0;
 					aload 4;
-					invokespecial 89;		// com/example/BenhNhan.signRsa([B)[B
+					invokespecial 91;		// com/example/BenhNhan.signRsa([B)[B
 					astore 5;
 				L2:	aload 5;
 					sconst_0;
@@ -1490,13 +1545,13 @@
 					sconst_0;
 					aload 5;
 					arraylength;
-					invokestatic 68;		// javacard/framework/Util.arrayCopy([BS[BSS)S
+					invokestatic 70;		// javacard/framework/Util.arrayCopy([BS[BSS)S
 					pop;
 					aload_1;
 					sconst_0;
 					aload 5;
 					arraylength;
-					invokevirtual 69;		// setOutgoingAndSend(SS)V
+					invokevirtual 71;		// setOutgoingAndSend(SS)V
 					return;
 		}
 
@@ -1507,7 +1562,7 @@
 				L0:	getfield_a_this 4;		// reference com/example/BenhNhan.rsaSig
 					getfield_a_this 5;		// reference com/example/BenhNhan.rsaPrivKey
 					sconst_1;
-					invokevirtual 90;		// init(Ljavacard/security/Key;B)V
+					invokevirtual 92;		// init(Ljavacard/security/Key;B)V
 					sspush 128;
 					newarray 11;
 					astore_2;
@@ -1518,7 +1573,7 @@
 					arraylength;
 					aload_2;
 					sconst_0;
-					invokevirtual 91;		// sign([BSS[BS)S
+					invokevirtual 93;		// sign([BSS[BS)S
 					pop;
 					aload_2;
 					areturn;
@@ -1573,7 +1628,7 @@
 			.locals 0;
 
 				L0:	aload_0;
-					invokespecial 92;		// java/lang/Object.<init>()V
+					invokespecial 94;		// java/lang/Object.<init>()V
 					aload_0;
 					sspush 2000;
 					newarray 11;

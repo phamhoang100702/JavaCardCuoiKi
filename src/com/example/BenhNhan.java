@@ -16,7 +16,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static short dataLen;
     // Counter used for various operations, such as PIN attempts
     private static byte counter = 0;
-
+    // Variable for check if the card have been init or not
+	private static boolean cardCreated = false; 
     // Instruction codes for various APDU commands
     private static final byte INS_INIT_BN = (byte) 0x10; // Initialize patient information
     private static final byte UNBLOCK_CARD = (byte) 0x11; // Unblock the card
@@ -37,6 +38,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
     private static final byte INS_UPDATE_CARDID = (byte) 0x26; //Update CardId
     private static final byte INS_GET_CARDID = (byte) 0x27; //Get CardId
     private static final byte LOCK_CARD = (byte) 0x28; //Lock the card
+    private static final byte CHECK_CARD_CREATED = (byte) 0x29; //Check if the card have been initialized or not
 	// AES key for encrypt and decrypt data
 	private AESKey aesKey;
 	private Cipher cipher;
@@ -170,6 +172,8 @@ public class BenhNhan extends Applet implements ExtendedLength {
 				get_card_id(apdu);
 				break;
 				
+			case (byte) CHECK_CARD_CREATED:
+				checkCardCreated(apdu);
             default:
                 ISOException.throwIt(ISO7816.SW_INS_NOT_SUPPORTED);
                 break;
@@ -235,19 +239,53 @@ public class BenhNhan extends Applet implements ExtendedLength {
 	    counter = 4;
 	    block_card = true;
     }
+    
+	private void checkCardCreated(APDU apdu) {
+		if (!cardCreated) {
+			ISOException.throwIt((short) 0x6A88); // Card not initialized
+		}
+    
+		// If the card is created, return success status
+		ISOException.throwIt(ISO7816.SW_NO_ERROR); // Status word for success
+	}
 
-    private void clear_card(APDU apdu) {
-        patient.setLenInfo((short) 0);
-        patient.setLenPin((short) 0);
-        patient.setLenBalance((short) 0);
-        patient.setLenCardId((short) 0);
-        patient.setLenPicture((short) 0);
-        Util.arrayFillNonAtomic(patient.getInfo(), (short) 0, (short) 2000, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getPin(), (short) 0, (short) 20, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getBalance(), (short) 0, (short) 20, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getCardId(), (short) 0, (short) 20, (byte) 0);
-        Util.arrayFillNonAtomic(patient.getPicture(), (short) 0, (short) 32767, (byte) 0);
-    }
+
+	private void clear_card(APDU apdu) {
+		// Reset the lengths of each field
+		patient.setLenInfo((short) 0);
+		patient.setLenPin((short) 0);
+		patient.setLenBalance((short) 0);
+		patient.setLenCardId((short) 0);
+		patient.setLenPicture((short) 0);
+
+		// Clear each byte array, if not null
+		byte[] info = patient.getInfo();
+		if (info != null) {
+			Util.arrayFillNonAtomic(info, (short) 0, (short) info.length, (byte) 0);
+		}
+
+		byte[] pin = patient.getPin();
+		if (pin != null) {
+			Util.arrayFillNonAtomic(pin, (short) 0, (short) pin.length, (byte) 0);
+		}
+
+		byte[] balance = patient.getBalance();
+		if (balance != null) {
+			Util.arrayFillNonAtomic(balance, (short) 0, (short) balance.length, (byte) 0);
+		}
+
+		byte[] cardId = patient.getCardId();
+		if (cardId != null) {
+			Util.arrayFillNonAtomic(cardId, (short) 0, (short) cardId.length, (byte) 0);
+		}
+
+		byte[] picture = patient.getPicture();
+		if (picture != null) {
+			Util.arrayFillNonAtomic(picture, (short) 0, (short) picture.length, (byte) 0);
+		}
+		cardCreated = false;
+	}
+
 
     private void get_pin(APDU apdu) {
         byte[] buffer = apdu.getBuffer();
@@ -289,8 +327,7 @@ public class BenhNhan extends Applet implements ExtendedLength {
 			JCSystem.abortTransaction();
 			ISOException.throwIt(ISO7816.SW_UNKNOWN);
 		}
-
-		// Update the patient balance length
+		cardCreated = true;
     }
 
     private void update_balance(APDU apdu, short len) {
